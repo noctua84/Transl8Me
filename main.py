@@ -20,7 +20,8 @@ else:
 sentry_sdk.init(
     DSN,
     traces_sample_rate=1.0,
-    integrations=[AioHttpIntegration()]
+    integrations=[AioHttpIntegration()],
+    release="Transl8Me@1.0.0"
 )
 
 
