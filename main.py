@@ -5,6 +5,7 @@ import os
 import sentry_sdk
 from bot import Bot
 from daemon import Daemon
+from sentry_sdk.integrations.aiohttp import AioHttpIntegration
 
 # load config and activate sentry if set.
 with open('config.json') as config_file:
@@ -18,7 +19,8 @@ else:
 # sentry
 sentry_sdk.init(
     DSN,
-    traces_sample_rate=1.0
+    traces_sample_rate=1.0,
+    integrations=[AioHttpIntegration()]
 )
 
 
@@ -60,7 +62,7 @@ if __name__ == "__main__":
         client.set_client(client)
 
         # client.run("NzUwMDI3MjEwNzcyOTcxNTQz.X00jRQ.48ATEDJsusMzOLdd6WDZ5ydnO6Q")
-        client.run("NzQ5MzE0Mjc5Njg1MjI2NjE4.X0qLTQ.AF2YPp5kTnqTfxLG5YSsYmH9tMg")
+        client.run(config.get("bot_token"))
 
     else:
         print("could not recognize OS")

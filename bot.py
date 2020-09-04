@@ -9,14 +9,6 @@ class Bot(discord.Client):
     client = None
     lang = ""
     enable_translate = False
-    help_text = 'help: \n'\
-                'info: \n'\
-                'this bot automatically translates messages from english to german '\
-                'and vice versa \n' \
-                '\n'\
-                'commands: \n'\
-                'to enable translation, type $start. \n'\
-                'to stop translation, type $stop'
 
     def set_client(self, client):
         """method to supply the actual client-instance"""
@@ -41,17 +33,26 @@ class Bot(discord.Client):
         # bot commands:
         # help:
         if message.content.startswith('$help'):
-            await message.channel.send(self.help_text)
+            help_text = discord.Embed(title="**Info**",
+                                      colour=discord.Colour(0xf8e71c),
+                                      description="this bot automatically translates messages from english to german "
+                                                  "and vice versa")
+            help_text.set_footer()
+            help_text.add_field(name="**Commands**", value="```\n $start - starts translation "
+                                                           "\n $stop - stops translation \n```")
+            await message.channel.send(embed=help_text)
 
         # start translation:
         if message.content.startswith('$start'):
             self.enable_translate = True
-            await message.channel.send("```start translation..```")
+            start = discord.Embed(colour=discord.Colour(0x7ed321), description="start translation..")
+            await message.channel.send(embed=start)
 
         # stop translation:
         if message.content.startswith('$stop'):
             self.enable_translate = False
-            await message.channel.send('translation stopped..')
+            stop = discord.Embed(colour=discord.Colour(0xd0021b), description="translation stopped..")
+            await message.channel.send(embed=stop)
 
         # ---------------------------------------------------------------------------------------
         # general message reaction:
