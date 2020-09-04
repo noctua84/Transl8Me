@@ -1,8 +1,10 @@
+"""everything needed to create the actual bot."""
 import discord
 from translation import TranslateMe
 
 
 class Bot(discord.Client):
+    """class representing the bot."""
     # target_lang = 'en'
     client = None
     lang = ""
@@ -17,14 +19,17 @@ class Bot(discord.Client):
                 'to stop translation, type $stop'
 
     def set_client(self, client):
+        """method to supply the actual client-instance"""
         self.client = client
 
     # einloggen:
     async def on_ready(self):
+        """async method called when the bot is logged in"""
         print("Bot online.")
 
     # wenn nachrichten gepostet werden:
     async def on_message(self, message):
+        """async method called whenever a message is sent and the bot belongs to the channel."""
         # general actions:
         if message.author == self.client.user:
             return
@@ -32,7 +37,7 @@ class Bot(discord.Client):
         if message.content.startswith('hello bot'):
             await message.channel.send('hello and welcome to the channel')
 
-        # ------------------------------------------------------------------------------------------------------------
+        # ---------------------------------------------------------------------------------------
         # bot commands:
         # help:
         if message.content.startswith('$help'):
@@ -48,7 +53,7 @@ class Bot(discord.Client):
             self.enable_translate = False
             await message.channel.send('translation stopped..')
 
-        # ------------------------------------------------------------------------------------------------------------
+        # ---------------------------------------------------------------------------------------
         # general message reaction:
         # detect language:
         if not message.content.startswith('$') and len(message.content) > 2:
@@ -68,7 +73,3 @@ class Bot(discord.Client):
                 pass
         else:
             pass
-
-
-
-

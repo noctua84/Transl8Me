@@ -1,7 +1,8 @@
-import sentry_sdk
 import json
 import platform
 import sys
+import os
+import sentry_sdk
 from bot import Bot
 from daemon import Daemon
 
@@ -10,13 +11,13 @@ with open('config.json') as config_file:
     config = json.load(config_file)
 
 if config is not None:
-    dsn = config.get('sentry_dsn')
+    DSN = config.get('sentry_dsn')
 else:
-    dsn = ""
+    DSN = ""
 
 # sentry
 sentry_sdk.init(
-    dsn,
+    DSN,
     traces_sample_rate=1.0
 )
 
@@ -26,13 +27,15 @@ class BotDaemon(Daemon):
     """Actual Daemon overwriting its parent run-method"""
     def run(self):
         daemon_client = Bot()
-        daemon_client.set_client(client)
+        daemon_client.set_client(daemon_client)
         # client.run("NzUwMDI3MjEwNzcyOTcxNTQz.X00jRQ.48ATEDJsusMzOLdd6WDZ5ydnO6Q")
         daemon_client.run("NzQ5MzE0Mjc5Njg1MjI2NjE4.X0qLTQ.AF2YPp5kTnqTfxLG5YSsYmH9tMg")
 
 
 if __name__ == "__main__":
     cur_os = platform.system()
+    cur_pid = os.getpid()
+    print(cur_pid)
 
     if cur_os == "Linux":
         daemon = BotDaemon('/tmp/transl8me.pid')

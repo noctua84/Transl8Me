@@ -21,7 +21,7 @@ multidict==4.7.6
 nltk==3.5
 regex==2020.7.14
 rfc3986==1.4.0
-sentry-sdk==0.17.3
+sentry_sdk==0.17.3
 sniffio==1.1.0
 textblob==0.15.3
 tqdm==4.48.2

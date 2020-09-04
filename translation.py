@@ -1,3 +1,4 @@
+"""this is a module docstring"""
 from textblob import TextBlob
 from googletrans import Translator
 
