@@ -28,11 +28,11 @@ sentry_sdk.init(
 # set up deamon class:
 class BotDaemon(Daemon):
     """Actual Daemon overwriting its parent run-method"""
+
     def run(self):
         daemon_client = Bot()
         daemon_client.set_client(daemon_client)
-        # client.run("NzUwMDI3MjEwNzcyOTcxNTQz.X00jRQ.48ATEDJsusMzOLdd6WDZ5ydnO6Q")
-        daemon_client.run("NzQ5MzE0Mjc5Njg1MjI2NjE4.X0qLTQ.AF2YPp5kTnqTfxLG5YSsYmH9tMg")
+        daemon_client.run(config.get("bot_token"))
 
 
 if __name__ == "__main__":
@@ -61,8 +61,6 @@ if __name__ == "__main__":
         # bot
         client = Bot()
         client.set_client(client)
-
-        # client.run("NzUwMDI3MjEwNzcyOTcxNTQz.X00jRQ.48ATEDJsusMzOLdd6WDZ5ydnO6Q")
         client.run(config.get("bot_token"))
 
     else:

@@ -5,6 +5,7 @@ from googletrans import Translator
 
 class TranslateMe:
     """Class supplying translation related methods"""
+
     def __init__(self):
         pass
 
