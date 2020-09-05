@@ -28,6 +28,7 @@ sentry_sdk.init(
 # set up deamon class:
 class BotDaemon(Daemon):
     """Actual Daemon overwriting its parent run-method"""
+
     def run(self):
         daemon_client = Bot()
         daemon_client.set_client(daemon_client)
