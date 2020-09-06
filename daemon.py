@@ -1,3 +1,4 @@
+"""This is a Linux-Deamon"""
 import os
 import sys
 import atexit
@@ -85,8 +86,8 @@ class Daemon:
 
         # Get the pid from the pidfile
         try:
-            with open(self.pidfile, 'r') as pf:
-                pid = int(pf.read().strip())
+            with open(self.pidfile, 'r') as pid_file:
+                pid = int(pid_file.read().strip())
         except IOError:
             pid = None
 
