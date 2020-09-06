@@ -35,8 +35,8 @@ class Bot(discord.Client):
         if message.content.startswith('$help'):
             help_text = discord.Embed(title="**Info**",
                                       colour=discord.Colour(0xf8e71c),
-                                      description="this bot automatically translates messages from english to german "
-                                                  "and vice versa")
+                                      description="this bot automatically translates messages "
+                                                  "from english to german and vice versa")
             help_text.set_footer()
             help_text.add_field(name="**Commands**", value="```\n $start - starts translation "
                                                            "\n $stop - stops translation \n```")

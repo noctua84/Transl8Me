@@ -41,9 +41,9 @@ if __name__ == "__main__":
     print(cur_pid)
 
     if cur_os == "Linux":
-        daemon = BotDaemon('/tmp/transl8me.pid')
+        daemon = BotDaemon(config.get("pid_file"))
         if len(sys.argv) == 2:
-            if 'start' == sys.argv[1]:
+            if sys.argv[1] == 'start':
                 daemon.start()
             elif 'stop' == sys.argv[1]:
                 daemon.stop()
