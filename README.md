@@ -2,7 +2,6 @@
 ![Pylint](https://github.com/noctua84/Transl8Me/workflows/Pylint/badge.svg?branch=master)
 [![DeepSource](https://static.deepsource.io/deepsource-badge-light-mini.svg)](https://deepsource.io/gh/noctua84/Transl8Me/?ref=repository-badge)
 
-
 ## Transl8Me
 
 Discord-Bot to translate incoming messages.  
