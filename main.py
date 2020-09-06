@@ -1,11 +1,12 @@
+"""Main routine for the Transl8Me bot."""
 import json
 import platform
 import sys
 import os
 import sentry_sdk
+from sentry_sdk.integrations.aiohttp import AioHttpIntegration
 from bot import Bot
 from daemon import Daemon
-from sentry_sdk.integrations.aiohttp import AioHttpIntegration
 
 # load config and activate sentry if set.
 with open('config.json') as config_file:
@@ -45,9 +46,9 @@ if __name__ == "__main__":
         if len(sys.argv) == 2:
             if sys.argv[1] == 'start':
                 daemon.start()
-            elif 'stop' == sys.argv[1]:
+            elif sys.argv[1] == 'stop':
                 daemon.stop()
-            elif 'restart' == sys.argv[1]:
+            elif sys.argv[1] == 'restart':
                 daemon.restart()
             else:
                 print("Unknown command")

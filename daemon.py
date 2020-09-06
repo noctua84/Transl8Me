@@ -41,20 +41,20 @@ class Daemon:
         # redirect standard file descriptors
         sys.stdout.flush()
         sys.stderr.flush()
-        si = open(os.devnull, 'r')
-        so = open(os.devnull, 'a+')
-        se = open(os.devnull, 'a+')
+        stdin = open(os.devnull, 'r')
+        stdout = open(os.devnull, 'a+')
+        stderr = open(os.devnull, 'a+')
 
-        os.dup2(si.fileno(), sys.stdin.fileno())
-        os.dup2(so.fileno(), sys.stdout.fileno())
-        os.dup2(se.fileno(), sys.stderr.fileno())
+        os.dup2(stdin.fileno(), sys.stdin.fileno())
+        os.dup2(stdout.fileno(), sys.stdout.fileno())
+        os.dup2(stderr.fileno(), sys.stderr.fileno())
 
         # write pidfile
         atexit.register(self.delpid)
 
         pid = str(os.getpid())
-        with open(self.pidfile, 'w+') as f:
-            f.write(pid + '\n')
+        with open(self.pidfile, 'w+') as file:
+            file.write(pid + '\n')
 
     def delpid(self):
         """Remove the pid-file"""
@@ -65,8 +65,8 @@ class Daemon:
 
         # Check for a pidfile to see if the daemon already runs
         try:
-            with open(self.pidfile, 'r') as pf:
-                pid = int(pf.read().strip())
+            with open(self.pidfile, 'r') as pid_file:
+                pid = int(pid_file.read().strip())
         except IOError:
             pid = None
 
@@ -102,8 +102,8 @@ class Daemon:
                 os.kill(pid, signal.SIGTERM)
                 time.sleep(0.1)
         except OSError as err:
-            e = str(err.args)
-            if e.find("No such process") > 0:
+            error = str(err.args)
+            if error.find("No such process") > 0:
                 if os.path.exists(self.pidfile):
                     os.remove(self.pidfile)
             else:
