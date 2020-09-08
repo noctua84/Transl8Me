@@ -9,11 +9,11 @@ from bot import Bot
 from daemon import Daemon
 
 # load config and activate sentry if set.
-with open('config.json') as config_file:
+with open("config.json") as config_file:
     config = json.load(config_file)
 
 if config is not None:
-    DSN = config.get('sentry_dsn')
+    DSN = config.get("sentry_dsn")
 else:
     DSN = ""
 
@@ -22,7 +22,7 @@ sentry_sdk.init(
     DSN,
     traces_sample_rate=1.0,
     integrations=[AioHttpIntegration()],
-    release="Transl8Me@1.0.0"
+    release="Transl8Me@1.0.0",
 )
 
 
@@ -44,11 +44,11 @@ if __name__ == "__main__":
     if cur_os == "Linux":
         daemon = BotDaemon(config.get("pid_file"))
         if len(sys.argv) == 2:
-            if sys.argv[1] == 'start':
+            if sys.argv[1] == "start":
                 daemon.start()
-            elif sys.argv[1] == 'stop':
+            elif sys.argv[1] == "stop":
                 daemon.stop()
-            elif sys.argv[1] == 'restart':
+            elif sys.argv[1] == "restart":
                 daemon.restart()
             else:
                 print("Unknown command")
