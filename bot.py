@@ -76,10 +76,12 @@ class Bot(discord.Client):
         # translate actual message-content:
         if self.enable_translate:
             if self.lang == "en" and not message.content.startswith("$"):
-                trans_message = TranslateMe.translate_text(message.content, "de")
+                trans_message = TranslateMe.translate_text(
+                    message.content, "de")
                 await message.channel.send(trans_message.text)
             elif self.lang == "de" and not message.content.startswith("$"):
-                trans_message = TranslateMe.translate_text(message.content, "en")
+                trans_message = TranslateMe.translate_text(
+                    message.content, "en")
                 await message.channel.send(trans_message.text)
             else:
                 pass
