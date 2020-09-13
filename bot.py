@@ -66,20 +66,6 @@ class Bot(discord.Client):
             )
             await message.channel.send(embed=stop)
 
-        # status translation:
-        if message.content.startswith("$status"):
-            if self.enable_translate:
-                active = discord.Embed(
-                    colour=discord.Colour(0xF5A623), description="translation running"
-                )
-                await message.channel.send(embed=active)
-            else:
-                not_active = discord.Embed(
-                    colour=discord.Colour(0xF5A623),
-                    description="translation not running",
-                )
-                await message.channel.send(embed=not_active)
-
         # ---------------------------------------------------------------------------------------
         # general message reaction:
         # detect language:
