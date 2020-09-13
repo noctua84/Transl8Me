@@ -11,6 +11,8 @@
 Discord-Bot to translate incoming messages.  
 Once started, the Bot simply translates every incoming message from english into german
 and from german to english.  
+Frensh translation is also possible as a third language.  
+  
 Other languages are currently not supported.
 
 ### Bot-Commands:
@@ -19,6 +21,7 @@ Other languages are currently not supported.
 $help: shows help
 $start: starts translation
 $stop: stops translation
+$status: show if bot is translating or not.
 ```
 
 ### Link to invite the bot:
@@ -43,7 +46,7 @@ _Tested with Ubuntu Server 20.04_
 2. Check if python3 and pip are installed.
 3. run pip3 -r requirements.txt
 4. change config_example.json to config.json
-5. modify config-settings: add your bot-token
+5. modify config-settings
 ```
 
 ### Control the service

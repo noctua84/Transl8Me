@@ -39,13 +39,14 @@ class Bot(discord.Client):
                 title="**Info**",
                 colour=discord.Colour(0xF8E71C),
                 description="this bot automatically translates messages "
-                "from english to german and vice versa",
+                "from english to german and french and vice versa",
             )
             help_text.set_footer()
             help_text.add_field(
                 name="**Commands**",
                 value="```\n $start - starts translation "
-                "\n $stop - stops translation \n```",
+                "\n $stop - stops translation "
+                "\n $status - shows if translation is active or not```",
             )
             await message.channel.send(embed=help_text)
 
@@ -65,6 +66,20 @@ class Bot(discord.Client):
             )
             await message.channel.send(embed=stop)
 
+        # status translation:
+        if message.content.startswith("$status"):
+            if self.enable_translate:
+                active = discord.Embed(
+                    colour=discord.Colour(0xF5A623), description="translation running"
+                )
+                await message.channel.send(embed=active)
+            else:
+                not_active = discord.Embed(
+                    colour=discord.Colour(0xF5A623),
+                    description="translation not running",
+                )
+                await message.channel.send(embed=not_active)
+
         # ---------------------------------------------------------------------------------------
         # general message reaction:
         # detect language:
@@ -75,12 +90,36 @@ class Bot(discord.Client):
 
         # translate actual message-content:
         if self.enable_translate:
+            # english
             if self.lang == "en" and not message.content.startswith("$"):
-                trans_message = TranslateMe.translate_text(message.content, "de")
-                await message.channel.send(trans_message.text)
+                trans_message_prime = TranslateMe.translate_text(message.content, "de")
+                trans_message_second = TranslateMe.translate_text(message.content, "fr")
+                translate_embed = discord.Embed(
+                    colour=discord.Colour(0x4A90E2),
+                    description=f"{trans_message_prime.text} \n{trans_message_second.text}",
+                )
+                await message.channel.send(embed=translate_embed)
+
+            # german
             elif self.lang == "de" and not message.content.startswith("$"):
-                trans_message = TranslateMe.translate_text(message.content, "en")
-                await message.channel.send(trans_message.text)
+                trans_message_prime = TranslateMe.translate_text(message.content, "en")
+                trans_message_second = TranslateMe.translate_text(message.content, "fr")
+                translate_embed = discord.Embed(
+                    colour=discord.Colour(0x4A90E2),
+                    description=f"{trans_message_prime.text} \n{trans_message_second.text}",
+                )
+                await message.channel.send(embed=translate_embed)
+
+            # french
+            elif self.lang == "fr" and not message.content.startswith("$"):
+                trans_message_prime = TranslateMe.translate_text(message.content, "de")
+                trans_message_second = TranslateMe.translate_text(message.content, "en")
+                translate_embed = discord.Embed(
+                    colour=discord.Colour(0x4A90E2),
+                    description=f"{trans_message_prime.text} \n{trans_message_second.text}",
+                )
+                await message.channel.send(embed=translate_embed)
+
             else:
                 pass
         else:

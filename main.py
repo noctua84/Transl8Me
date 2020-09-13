@@ -5,12 +5,16 @@ import sys
 import os
 import sentry_sdk
 from sentry_sdk.integrations.aiohttp import AioHttpIntegration
+from sentry_sdk import capture_exception
 from bot import Bot
 from daemon import Daemon
 
 # load config and activate sentry if set.
-with open("config.json") as config_file:
-    config = json.load(config_file)
+try:
+    with open("config.json") as config_file:
+        config = json.load(config_file)
+except FileNotFoundError:
+    config = None
 
 if config is not None:
     DSN = config.get("sentry_dsn")
@@ -22,7 +26,9 @@ sentry_sdk.init(
     DSN,
     traces_sample_rate=1.0,
     integrations=[AioHttpIntegration()],
-    release="Transl8Me@1.0.0",
+    max_breadcrumbs=50,
+    debug=False,
+    send_default_pii=True,
 )
 
 
@@ -31,9 +37,12 @@ class BotDaemon(Daemon):
     """Actual Daemon overwriting its parent run-method"""
 
     def run(self):
-        daemon_client = Bot()
-        daemon_client.set_client(daemon_client)
-        daemon_client.run(config.get("bot_token"))
+        try:
+            daemon_client = Bot()
+            daemon_client.set_client(daemon_client)
+            daemon_client.run(config.get("bot_token"))
+        except Exception as e:
+            capture_exception(e)
 
 
 if __name__ == "__main__":
