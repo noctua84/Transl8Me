@@ -78,8 +78,10 @@ class Bot(discord.Client):
         if self.enable_translate:
             # english
             if self.lang == "en" and not message.content.startswith("$"):
-                trans_message_prime = TranslateMe.translate_text(message.content, "de")
-                trans_message_second = TranslateMe.translate_text(message.content, "fr")
+                trans_message_prime = TranslateMe.translate_text(
+                    message.content, "de")
+                trans_message_second = TranslateMe.translate_text(
+                    message.content, "fr")
                 translate_embed = discord.Embed(
                     colour=discord.Colour(0x4A90E2),
                     description=f"{trans_message_prime.text} \n{trans_message_second.text}",
@@ -88,8 +90,10 @@ class Bot(discord.Client):
 
             # german
             elif self.lang == "de" and not message.content.startswith("$"):
-                trans_message_prime = TranslateMe.translate_text(message.content, "en")
-                trans_message_second = TranslateMe.translate_text(message.content, "fr")
+                trans_message_prime = TranslateMe.translate_text(
+                    message.content, "en")
+                trans_message_second = TranslateMe.translate_text(
+                    message.content, "fr")
                 translate_embed = discord.Embed(
                     colour=discord.Colour(0x4A90E2),
                     description=f"{trans_message_prime.text} \n{trans_message_second.text}",
@@ -98,8 +102,10 @@ class Bot(discord.Client):
 
             # french
             elif self.lang == "fr" and not message.content.startswith("$"):
-                trans_message_prime = TranslateMe.translate_text(message.content, "de")
-                trans_message_second = TranslateMe.translate_text(message.content, "en")
+                trans_message_prime = TranslateMe.translate_text(
+                    message.content, "de")
+                trans_message_second = TranslateMe.translate_text(
+                    message.content, "en")
                 translate_embed = discord.Embed(
                     colour=discord.Colour(0x4A90E2),
                     description=f"{trans_message_prime.text} \n{trans_message_second.text}",
