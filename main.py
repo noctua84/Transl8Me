@@ -14,7 +14,7 @@ try:
     with open("config.json") as config_file:
         config = json.load(config_file)
 except FileNotFoundError:
-    config = None
+    pass
 
 if config is not None:
     DSN = config.get("sentry_dsn")
@@ -41,8 +41,8 @@ class BotDaemon(Daemon):
             daemon_client = Bot()
             daemon_client.set_client(daemon_client)
             daemon_client.run(config.get("bot_token"))
-        except Exception as e:
-            capture_exception(e)
+        except Exception as exception:
+            capture_exception(exception)
 
 
 if __name__ == "__main__":
