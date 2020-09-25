@@ -50,14 +50,14 @@ class Daemon:
         os.dup2(stdout.fileno(), sys.stdout.fileno())
         os.dup2(stderr.fileno(), sys.stderr.fileno())
 
-        # write pidfile
-        atexit.register(self.delpid)
+        # write pid file
+        atexit.register(self.delete_pid)
 
         pid = str(os.getpid())
         with open(self.pidfile, "w+") as file:
             file.write(pid + "\n")
 
-    def delpid(self):
+    def delete_pid(self):
         """Remove the pid-file"""
         os.remove(self.pidfile)
 

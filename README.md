@@ -46,7 +46,12 @@ _Tested with Ubuntu Server 20.04_
 2. Check if python3 and pip are installed.
 3. run pip3 -r requirements.txt
 4. change config_example.json to config.json
-5. modify config-settings
+5. modify config-settings based on your infrastructure and used tools.
+```
+```
+Currently pre integrated but not initially configured tools:
+1. Sentry
+2. Datadog
 ```
 
 ### Control the service

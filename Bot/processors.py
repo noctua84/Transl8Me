@@ -3,17 +3,19 @@ from Bot.commands import Commands
 
 
 class Processors:
-    def __init__(self):
-        self.translation = TranslateMe()
+    def __init__(self, config):
+        self.translation = TranslateMe(config)
 
-    @staticmethod
-    def commands(command, enable_translate):
+    def commands(self, command, enable_translate):
         """process bot commands"""
         return {
             "help": Commands.get_help(),
             "start": Commands.trigger_translation(enable_translate),
             "stop": Commands.trigger_translation(enable_translate),
             "status": Commands.get_status(enable_translate),
+            "stats": Commands.get_stats(
+                language_stats=self.translation.get_language_counts()
+            ),
         }[command]
 
     def translate_message(self, message):

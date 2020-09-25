@@ -9,7 +9,10 @@ class Bot(discord.Client):
     # target_lang = 'en'
     client = None
     enable_translate = False
-    processor = Processors()
+
+    def __init__(self, config, **options):
+        self.processor = Processors(config)
+        super().__init__(**options)
 
     def set_client(self, client):
         """method to supply the actual client-instance"""
@@ -37,7 +40,7 @@ class Bot(discord.Client):
         if message.content.startswith("$"):
             context = message.content.split("$")[1]
             # handle commands
-            result = Processors.commands(context, self.enable_translate)
+            result = self.processor.commands(context, self.enable_translate)
             if "status" in result and result["status"]:
                 self.enable_translate = result["status"]
 

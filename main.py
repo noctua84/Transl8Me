@@ -6,7 +6,6 @@ import os
 import sentry_sdk
 from sentry_sdk.integrations.aiohttp import AioHttpIntegration
 from sentry_sdk import capture_exception
-from datadog import initialize, statsd
 from bot import Bot
 from daemon import Daemon
 
@@ -32,11 +31,6 @@ sentry_sdk.init(
     send_default_pii=True,
 )
 
-# metrics
-options = {"statsd_host": "127.0.0.1", "statsd_port": 8125}
-
-initialize(**options)
-
 
 # set up deamon class:
 class BotDaemon(Daemon):
@@ -44,7 +38,7 @@ class BotDaemon(Daemon):
 
     def run(self):
         try:
-            daemon_client = Bot()
+            daemon_client = Bot(config)
             daemon_client.set_client(daemon_client)
             daemon_client.run(config.get("bot_token"))
         except Exception as exception:
@@ -75,7 +69,7 @@ if __name__ == "__main__":
 
     elif cur_os == "Windows":
         # bot
-        client = Bot()
+        client = Bot(config)
         client.set_client(client)
         client.run(config.get("bot_token"))
 

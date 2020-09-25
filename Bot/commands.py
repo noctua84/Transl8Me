@@ -56,3 +56,26 @@ class Commands:
         )
 
         return {"embed": status_embed}
+
+    @staticmethod
+    def get_stats(language_stats: dict):
+        """renders embed for language statistics"""
+        total_count = (
+            language_stats["count_de"]
+            + language_stats["count_en"]
+            + language_stats["count_fr"]
+        )
+        stats_embed = discord.Embed(
+            colour=discord.Colour(0xF5A623),
+            title="**Stats**",
+            description="```"
+            f"German: {language_stats['count_de']} Messages\n"
+            f"English: {language_stats['count_en']} Messages\n"
+            f"French: {language_stats['count_fr']} Messages\n"
+            f"Other: {language_stats['count_other']} Messages not translated\n"
+            f"\n"
+            f"Total Messages translated: {total_count}"
+            "```",
+        )
+
+        return {"embed": stats_embed}
