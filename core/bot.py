@@ -1,6 +1,6 @@
 """everything needed to create the actual bot."""
 import discord
-from Core.processors import Processors
+from controllers.messagecontroller import MessageController
 
 
 class Bot(discord.Client):
@@ -11,7 +11,7 @@ class Bot(discord.Client):
     enable_translate = False
 
     def __init__(self, config, **options):
-        self.processor = Processors(config)
+        self.message_controller = MessageController(config)
         super().__init__(**options)
 
     def set_client(self, client):
@@ -21,7 +21,7 @@ class Bot(discord.Client):
     # einloggen:
     async def on_ready(self):
         """async method called when the bot is logged in"""
-        print("Core online.")
+        print("Bot online.")
         print(self.user.name)
 
     # wenn nachrichten gepostet werden:
@@ -41,7 +41,7 @@ class Bot(discord.Client):
         if message.content.startswith("$"):
             context = message.content.split("$")[1]
             # handle commands
-            result = self.processor.commands(context, self.enable_translate)
+            result = self.message_controller.commands(context, self.enable_translate)
             if "status" in result and result["status"]:
                 self.enable_translate = result["status"]
 
@@ -50,7 +50,7 @@ class Bot(discord.Client):
         # ---------------------------------------------------------------------------------------
         # general message reaction:
         else:
-            translate_embed = self.processor.translate_message(message)
+            translate_embed = self.message_controller.translate_message(message)
 
             if translate_embed["embed"] is not None:
                 await message.channel.send(embed=translate_embed["embed"])

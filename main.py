@@ -7,8 +7,8 @@ import sentry_sdk
 from discord import LoginFailure
 from sentry_sdk.integrations.aiohttp import AioHttpIntegration
 from sentry_sdk import capture_exception
-from bot import Bot
-from daemon import Daemon
+from core.bot import Bot
+from core.daemon import Daemon
 
 # load config and activate sentry if set.
 with open("config.json") as config_file:

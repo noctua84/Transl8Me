@@ -1,8 +1,11 @@
-from Core.translation import TranslateMe
-from Core.commands import Commands
+"""Module processors"""
+from handler.translation import TranslateMe
+from handler.commands import Commands
 
 
-class Processors:
+class MessageController:
+    """class controlling what to be done with a message"""
+
     def __init__(self, config):
         self.translation = TranslateMe(config)
 
