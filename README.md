@@ -13,8 +13,8 @@
 Discord-Bot to translate incoming messages.  
 Once started, the Bot simply translates every incoming message from english into german
 and from german to english.  
-Frensh translation is also possible as a third language.  
-  
+Frensh translation is also possible as a third language.
+
 Other languages are currently not supported.
 
 ### Bot-Commands:
@@ -50,6 +50,7 @@ _Tested with Ubuntu Server 20.04_
 4. change config_example.json to config.json
 5. modify config-settings based on your infrastructure and used tools.
 ```
+
 ```
 Currently pre integrated but not initially configured tools:
 1. Sentry
