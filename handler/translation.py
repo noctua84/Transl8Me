@@ -1,8 +1,8 @@
 """this is a module docstring"""
-import discord
 from textblob import TextBlob
 from googletrans import Translator
 from datadog import initialize, statsd
+import discord
 
 
 class TranslateMe:
