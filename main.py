@@ -4,17 +4,16 @@ import platform
 import sys
 import os
 import sentry_sdk
+from discord import LoginFailure
 from sentry_sdk.integrations.aiohttp import AioHttpIntegration
 from sentry_sdk import capture_exception
 from bot import Bot
 from daemon import Daemon
 
 # load config and activate sentry if set.
-try:
-    with open("config.json") as config_file:
-        config = json.load(config_file)
-except FileNotFoundError:
-    pass
+with open("config.json") as config_file:
+    config = json.load(config_file)
+
 
 if config is not None:
     DSN = config.get("sentry_dsn")
@@ -41,8 +40,12 @@ class BotDaemon(Daemon):
             daemon_client = Bot(config)
             daemon_client.set_client(daemon_client)
             daemon_client.run(config.get("bot_token"))
-        except Exception as exception:
-            capture_exception(exception)
+        except TypeError as type_exception:
+            # should not occur - just for reference
+            capture_exception(type_exception)
+        except LoginFailure as bot_token_exception:
+            # is raised if bot-token is wrong or missing
+            capture_exception(bot_token_exception)
 
 
 if __name__ == "__main__":
@@ -69,9 +72,14 @@ if __name__ == "__main__":
 
     elif cur_os == "Windows":
         # bot
-        client = Bot(config)
-        client.set_client(client)
-        client.run(config.get("bot_token"))
+        try:
+            client = Bot(config)
+            client.set_client(client)
+            client.run(config.get("bot_token"))
+        except TypeError as type_exception:
+            capture_exception(type_exception)
+        except LoginFailure as bot_token_exception:
+            capture_exception(bot_token_exception)
 
     else:
         print("could not recognize OS")

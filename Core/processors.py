@@ -1,5 +1,5 @@
-from Bot.translation import TranslateMe
-from Bot.commands import Commands
+from Core.translation import TranslateMe
+from Core.commands import Commands
 
 
 class Processors:

@@ -1,6 +1,6 @@
 """everything needed to create the actual bot."""
 import discord
-from Bot.processors import Processors
+from Core.processors import Processors
 
 
 class Bot(discord.Client):
@@ -21,7 +21,7 @@ class Bot(discord.Client):
     # einloggen:
     async def on_ready(self):
         """async method called when the bot is logged in"""
-        print("Bot online.")
+        print("Core online.")
         print(self.user.name)
 
     # wenn nachrichten gepostet werden:
