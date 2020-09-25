@@ -7,7 +7,8 @@ import time
 
 
 class Daemon:
-    """A generic daemon class. Usage: subclass the daemon class and override the run() method."""
+    """A generic daemon class. Usage: subclass the daemon
+    class and override the run() method."""
 
     def __init__(self, pidfile):
         self.pidfile = pidfile
@@ -115,4 +116,5 @@ class Daemon:
         self.start()
 
     def run(self):
-        """This method has to be overridden in specific daemon-class inheriting from this"""
+        """This method has to be overridden in specific daemon-class
+        inheriting from this"""

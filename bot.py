@@ -26,7 +26,8 @@ class Bot(discord.Client):
 
     # wenn nachrichten gepostet werden:
     async def on_message(self, message):
-        """async method called whenever a message is sent and the bot belongs to the channel."""
+        """async method called whenever a message is sent
+        and the bot belongs to the channel."""
 
         # general actions:
         if self.client.user == message.author:
