@@ -1,2 +1,2 @@
-""""Module: handler"""
+"""Module: handler"""
 __all__ = ["commands", "translation"]
