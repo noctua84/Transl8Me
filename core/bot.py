@@ -41,7 +41,8 @@ class Bot(discord.Client):
         if message.content.startswith("$"):
             context = message.content.split("$")[1]
             # handle commands
-            result = self.message_controller.commands(context, self.enable_translate)
+            result = self.message_controller.commands(
+                context, self.enable_translate)
             if "status" in result and result["status"]:
                 self.enable_translate = result["status"]
 
@@ -50,7 +51,8 @@ class Bot(discord.Client):
         # ---------------------------------------------------------------------------------------
         # general message reaction:
         else:
-            translate_embed = self.message_controller.translate_message(message)
+            translate_embed = self.message_controller.translate_message(
+                message)
 
             if translate_embed["embed"] is not None:
                 await message.channel.send(embed=translate_embed["embed"])
