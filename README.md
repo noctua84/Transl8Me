@@ -1,4 +1,6 @@
 [![DeepSource](https://static.deepsource.io/deepsource-badge-light-mini.svg)](https://deepsource.io/gh/noctua84/Transl8Me/?ref=repository-badge)  
+[![DeepSource](https://deepsource.io/gh/noctua84/Transl8Me.svg/?label=active+issues&show_trend=true)](https://deepsource.io/gh/noctua84/Transl8Me/?ref=repository-badge)
+[![DeepSource](https://deepsource.io/gh/noctua84/Transl8Me.svg/?label=resolved+issues&show_trend=true)](https://deepsource.io/gh/noctua84/Transl8Me/?ref=repository-badge)  
 [![CodeFactor](https://www.codefactor.io/repository/github/noctua84/transl8me/badge)](https://www.codefactor.io/repository/github/noctua84/transl8me)
 ![CodeInspector](https://www.code-inspector.com/project/12992/status/svg)
 ![CodeInspector](https://www.code-inspector.com/project/12992/score/svg)  
