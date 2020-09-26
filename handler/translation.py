@@ -1,7 +1,7 @@
 """this is a module docstring"""
+from datadog import initialize, statsd
 from textblob import TextBlob
 from googletrans import Translator
-from datadog import initialize, statsd
 import discord
 
 
