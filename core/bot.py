@@ -1,18 +1,28 @@
 """everything needed to create the actual bot."""
 import discord
+import time
+import asyncio
+
+from sentry_sdk import capture_exception
+
 from controllers.messagecontroller import MessageController
+from handler.messages import Messages
+from handler.validations import Validations
+from handler.translation import TranslateMe
 
 
 class Bot(discord.Client):
     """class representing the bot."""
 
-    # target_lang = 'en'
     client = None
     enable_translate = False
 
     def __init__(self, config, **options):
-        self.message_controller = MessageController(config)
         super().__init__(**options)
+        self.msg = Messages()
+        self.val = Validations()
+        self.t = TranslateMe(config)
+        self.message_controller = MessageController(config, self.msg)
 
     def set_client(self, client):
         """method to supply the actual client-instance"""
@@ -31,28 +41,69 @@ class Bot(discord.Client):
 
         # general actions:
         if self.client.user == message.author:
+            self.msg.message_count_bot += 1
             return
 
         if message.content.startswith("hello bot"):
+            self.msg.message_count_all += 1
             await message.channel.send("hello and welcome to the channel")
 
         # ---------------------------------------------------------------------------------------
         # bot commands:
         if message.content.startswith("$"):
+            self.msg.message_count_all += 1
+            self.msg.message_count_command += 1
+            # get command context:
             context = message.content.split("$")[1]
-            # handle commands
-            result = self.message_controller.commands(context, self.enable_translate)
-            if "status" in result and result["status"]:
-                self.enable_translate = result["status"]
 
-            await message.channel.send(embed=result["embed"])
+            # handle commands with restrictions:
+            if self.val.validate_restrictions(
+                context, self.val.validate_admin_role(message, self.client)
+            ):
+                result = self.message_controller.commands(
+                    context, self.enable_translate
+                )
+                if "status" in result and result["status"]:
+                    self.enable_translate = result["status"]
+
+                await message.channel.send(embed=result["embed"])
+            else:
+                print("nothing to do")
 
         # ---------------------------------------------------------------------------------------
         # general message reaction:
         else:
-            translate_embed = self.message_controller.translate_message(message)
+            if self.msg.is_translatable(message):
+                translate_embed = self.message_controller.translate_message(message)
 
-            if translate_embed["embed"] is not None:
-                await message.channel.send(embed=translate_embed["embed"])
+                if translate_embed["embed"] is not None:
+                    self.msg.message_count_all += 1
+                    self.msg.message_count_translated += 1
+                    await message.channel.send(embed=translate_embed["embed"])
+                else:
+                    self.msg.message_count_all += 1
             else:
-                pass
+                self.msg.message_count_all += 1
+
+    async def save_msg_stats(self):
+        await self.client.wait_until_ready()
+
+        while not self.client.is_closed():
+            cur_msg_count = self.msg.get_message_count()
+            cur_translation_count = self.t.get_language_counts()
+
+            try:
+                with open("stats.txt", "a+") as file:
+                    file.write(
+                        f"Time: {int(time.time())} \n"
+                        f"Messages: {cur_msg_count} \n"
+                        f"Translations: {cur_translation_count}\n\n"
+                    )
+
+                    self.msg.reset_message_count()
+
+                    await asyncio.sleep(10)
+
+            except FileNotFoundError as f_err:
+                capture_exception(f_err)
+                await asyncio.sleep(60)

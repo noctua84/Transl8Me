@@ -5,8 +5,8 @@ import sys
 import os
 import sentry_sdk
 from discord import LoginFailure
-from sentry_sdk.integrations.aiohttp import AioHttpIntegration
 from sentry_sdk import capture_exception
+from sentry_sdk.integrations.aiohttp import AioHttpIntegration
 from core.bot import Bot
 from core.daemon import Daemon
 
@@ -16,7 +16,7 @@ with open("config.json") as config_file:
 
 
 if config is not None:
-    DSN = config.get("sentry_dsn")
+    DSN = config["global_settings"]["sentry_dsn"]
 else:
     DSN = ""
 
@@ -28,6 +28,8 @@ sentry_sdk.init(
     max_breadcrumbs=50,
     debug=False,
     send_default_pii=True,
+    release="transl8me@2.0.0",
+    environment="production",
 )
 
 
@@ -40,12 +42,12 @@ class BotDaemon(Daemon):
             daemon_client = Bot(config)
             daemon_client.set_client(daemon_client)
             daemon_client.run(config.get("bot_token"))
-        except TypeError as type_exception:
+        except TypeError as type_exception_daemon:
             # should not occur - just for reference
-            capture_exception(type_exception)
-        except LoginFailure as bot_token_exception:
+            capture_exception(type_exception_daemon)
+        except LoginFailure as bot_token_exception_daemon:
             # is raised if bot-token is wrong or missing
-            capture_exception(bot_token_exception)
+            capture_exception(bot_token_exception_daemon)
 
 
 if __name__ == "__main__":
@@ -54,7 +56,8 @@ if __name__ == "__main__":
     print(cur_pid)
 
     if cur_os == "Linux":
-        daemon = BotDaemon(config.get("pid_file"))
+        pid_file = config["global_settings"]["pid_file"]
+        daemon = BotDaemon(pid_file)
         if len(sys.argv) == 2:
             if sys.argv[1] == "start":
                 daemon.start()
@@ -73,9 +76,11 @@ if __name__ == "__main__":
     elif cur_os == "Windows":
         # bot
         try:
+            token = config["global_settings"]["bot_token"]
             client = Bot(config)
             client.set_client(client)
-            client.run(config.get("bot_token"))
+            # client.loop.create_task(client.save_msg_stats())
+            client.run(token)
         except TypeError as type_exception:
             capture_exception(type_exception)
         except LoginFailure as bot_token_exception:

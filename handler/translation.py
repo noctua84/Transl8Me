@@ -8,16 +8,14 @@ import discord
 class TranslateMe:
     """Class supplying translation related methods"""
 
+    lang_counts = {"de": 0, "fr": 0, "en": 0, "ru": 0, "other": 0}
+
     def __init__(self, config):
-        self.count_de = 0
-        self.count_fr = 0
-        self.count_en = 0
-        self.count_other = 0
         self.src_lang = ""
         self.config = config
 
         # metrics
-        if self.config["datadog_metrics"]:
+        if self.config["global_settings"]["datadog_metrics"]:
             options = {"statsd_host": "127.0.0.1", "statsd_port": 8125}
             initialize(**options)
 
@@ -28,44 +26,39 @@ class TranslateMe:
 
         return self.src_lang
 
-    @staticmethod
-    def translate_text(text, dest_language):
+    def translate_text(self, text, valid_languages: list) -> dict:
         """method to translate a given text based on the supplied language code"""
-        translate = Translator()
+        t = Translator()
+        translations = {}
+        lang_count = 1
 
-        return translate.translate(text, dest_language)
+        if self.src_lang in valid_languages:
+            for lang_id in self.lang_counts:
+                if lang_id == self.src_lang:
+                    self.lang_counts[lang_id] += 1
+            valid_languages.remove(self.src_lang)
 
-    def translated_message(self, message, lang):
-        """Method to manage the translation"""
-        trans_message_prime = ""
-        trans_message_second = ""
-
-        if lang == "de":
-            trans_message_prime = self.translate_text(message.content, "en")
-            trans_message_second = self.translate_text(message.content, "fr")
-            self.count_de = self.count_de + 1
-            statsd.increment("language_de", tags=["environment:develop"])
-
-        elif lang == "en":
-            trans_message_prime = self.translate_text(message.content, "de")
-            trans_message_second = self.translate_text(message.content, "fr")
-            self.count_en = self.count_en + 1
-            statsd.increment("language_en", tags=["environment:develop"])
-
-        elif lang == "fr":
-            trans_message_prime = self.translate_text(message.content, "de")
-            trans_message_second = self.translate_text(message.content, "en")
-            self.count_fr = self.count_fr + 1
-            statsd.increment("language_fr", tags=["environment:develop"])
-
+            for lang in valid_languages:
+                result = t.translate(text, lang)
+                translations[lang_count] = result
+                lang_count += 1
         else:
-            self.count_other = self.count_other + 1
+            self.lang_counts["other"] += 1
 
-        if trans_message_prime != "" and trans_message_second != "":
+        return translations
+
+    def generate_embed(self, message):
+        """Method to manage the translation"""
+        valid_languages = ["de", "en", "fr", "ru"]
+        trans_messages = self.translate_text(message.content, valid_languages)
+
+        if trans_messages != {}:
             statsd.increment("translated_msg", tags=["environment:develop"])
             translate_embed = discord.Embed(
                 colour=discord.Colour(0x4A90E2),
-                description=f"{trans_message_prime.text} \n{trans_message_second.text}",
+                description=f"{trans_messages[1].text} \n\n "
+                f"{trans_messages[2].text} \n\n"
+                f"{trans_messages[3].text}",
             )
 
             result = {
@@ -80,10 +73,4 @@ class TranslateMe:
 
     def get_language_counts(self):
         """Method to acquire language counts and other language usage related params"""
-
-        return {
-            "count_de": self.count_de,
-            "count_en": self.count_en,
-            "count_fr": self.count_fr,
-            "count_other": self.count_other,
-        }
+        return self.lang_counts

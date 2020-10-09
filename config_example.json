@@ -1,6 +1,28 @@
 {
-  "sentry_dsn": "",
-  "bot_token": "",
-  "pid_file": "",
-  "datadog_metrics": false
+  "global_settings": {
+    "sentry_dsn": "",
+    "bot_token": "",
+    "pid_file": "",
+    "datadog_metrics": false
+  },
+  "database": {
+    "host": "",
+    "port": "",
+    "user": "",
+    "pass": "",
+    "db_name": ""
+  },
+  "language": {
+    "supported": {
+      "<language>": "<language>"
+    }
+  },
+  "commands": {
+    "restricted": {
+      "<command>": "<command>"
+    },
+    "allowed": {
+      "<command>": "<command>"
+    }
+  }
 }

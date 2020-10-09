@@ -15,7 +15,7 @@ class Commands:
             title="**Info**",
             colour=discord.Colour(0xF8E71C),
             description="this bot automatically translates messages "
-            "from english to german and french and vice versa",
+            "from english to german, french and russian and vice versa",
         )
         help_text.set_footer()
         help_text.add_field(
@@ -58,23 +58,28 @@ class Commands:
         return {"embed": status_embed}
 
     @staticmethod
-    def get_stats(language_stats: dict):
+    def get_stats(language_stats: dict, message_stats: dict):
         """renders embed for language statistics"""
-        total_count = (
-            language_stats["count_de"]
-            + language_stats["count_en"]
-            + language_stats["count_fr"]
-        )
+
         stats_embed = discord.Embed(
             colour=discord.Colour(0xF5A623),
             title="**Stats**",
             description="```"
-            f"German: {language_stats['count_de']} Messages\n"
-            f"English: {language_stats['count_en']} Messages\n"
-            f"French: {language_stats['count_fr']} Messages\n"
-            f"Other: {language_stats['count_other']} Messages not translated\n"
+            f"German: {language_stats['de']} Messages\n"
+            f"English: {language_stats['en']} Messages\n"
+            f"French: {language_stats['fr']} Messages\n"
+            f"Russian: {language_stats['ru']} Messages\n"
+            f"Other: {language_stats['other']} Messages\n"
             f"\n"
-            f"Total Messages translated: {total_count}"
+            f"Messages translated: {message_stats['translated']} \n"
+            f"Messages not translated: {language_stats['other']} \n"
+            f"\n"
+            f"Emoji-Messages: {message_stats['emojis']} \n"
+            f"Command-Messages: {message_stats['commands']} \n"
+            f"Image-Messages: {message_stats['images']} \n"
+            f"\n"
+            f"Total user messages handled: {message_stats['all']} \n"
+            f"Total bot messages: {message_stats['bot']} \n"
             "```",
         )
 
