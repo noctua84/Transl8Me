@@ -39,9 +39,10 @@ class BotDaemon(Daemon):
 
     def run(self):
         try:
+            d_token = config["global_settings"]["bot_token"]
             daemon_client = Bot(config)
             daemon_client.set_client(daemon_client)
-            daemon_client.run(config.get("bot_token"))
+            daemon_client.run(d_token)
         except TypeError as type_exception_daemon:
             # should not occur - just for reference
             capture_exception(type_exception_daemon)
