@@ -28,20 +28,21 @@ class Commands:
         return {"embed": help_text}
 
     @staticmethod
-    def trigger_translation(translation_state):
+    def trigger_translation(command: str, enable_translate: bool):
         """triggers translation"""
-        if not translation_state:
+        if command == "start" and not enable_translate:
             state = discord.Embed(
                 colour=discord.Colour(0x7ED321), description="start translation.."
             )
-            translation_state = True
-        else:
+
+        elif command == "stop" and enable_translate:
             state = discord.Embed(
                 colour=discord.Colour(0xD0021B), description="translation stopped.."
             )
-            translation_state = False
+        else:
+            state = ""
 
-        return {"embed": state, "status": translation_state}
+        return {"embed": state}
 
     @staticmethod
     def get_status(translation_state):

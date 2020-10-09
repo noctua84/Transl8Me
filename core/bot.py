@@ -64,10 +64,18 @@ class Bot(discord.Client):
                     context, self.enable_translate
                 )
 
-                if "status" in result:
-                    self.enable_translate = result["status"]
+                print(context)
+                print(self.enable_translate)
 
-                await message.channel.send(embed=result["embed"])
+                if context == "start":
+                    self.enable_translate = True
+                else:
+                    self.enable_translate = False
+
+                print(self.enable_translate)
+
+                if result["embed"] != "":
+                    await message.channel.send(embed=result["embed"])
             else:
                 print("nothing to do")
 

@@ -14,8 +14,8 @@ class MessageController:
         """process bot commands"""
         return {
             "help": Commands.get_help(),
-            "start": Commands.trigger_translation(enable_translate),
-            "stop": Commands.trigger_translation(enable_translate),
+            "start": Commands.trigger_translation(command, enable_translate),
+            "stop": Commands.trigger_translation(command, enable_translate),
             "status": Commands.get_status(enable_translate),
             "stats": Commands.get_stats(
                 language_stats=self.translation.get_language_counts(),
