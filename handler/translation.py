@@ -24,8 +24,6 @@ class TranslateMe:
         lang = TextBlob(text)
         self.src_lang = lang.detect_language()
 
-        return self.src_lang
-
     def translate_text(self, text, valid_languages: list) -> dict:
         """method to translate a given text based on the supplied language code"""
         t = Translator()

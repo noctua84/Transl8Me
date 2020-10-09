@@ -25,6 +25,6 @@ class MessageController:
 
     def translate_message(self, message):
         """process translation"""
-        lang = self.translation.get_language(message.content)
+        self.translation.get_language(message.content)
         translated_message = self.translation.generate_embed(message)
         return translated_message

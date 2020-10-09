@@ -13,8 +13,12 @@ class Validations:
         admin = False
         cur_members = client.get_all_members()
         for member in cur_members:
+            with open("test.txt", "a+") as file:
+                file.write(f"User: {member} \n")
             if member == message.author:
                 for role in member.roles:
+                    with open("test.txt", "a+") as file:
+                        file.write(f"Rolle: {role} \n")
                     if role.name == "Admin":
                         admin = True
 

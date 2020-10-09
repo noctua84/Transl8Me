@@ -63,7 +63,8 @@ class Bot(discord.Client):
                 result = self.message_controller.commands(
                     context, self.enable_translate
                 )
-                if "status" in result and result["status"]:
+
+                if "status" in result:
                     self.enable_translate = result["status"]
 
                 await message.channel.send(embed=result["embed"])
