@@ -25,7 +25,6 @@ class Validations:
         """validates if command has restrictions or not and if these are met"""
         if context in ["start", "stop", "stats"] and is_admin:
             return True
-        elif context in ["help", "status"]:
+        if context in ["help", "status"]:
             return True
-        else:
-            return False
+        return False
