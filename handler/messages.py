@@ -28,20 +28,18 @@ class Messages:
         if message.content == "" and message.attachments[0].filename.endswith(".jpg"):
             self.message_count_img += 1
             return False
-        else:
-            cur_message = message.content.split(" ")
-            emoji_count = 0
+        cur_message = message.content.split(" ")
+        emoji_count = 0
 
-            # check if content contains only emojis:
-            for item in cur_message:
-                if item in UNICODE_EMOJI:
-                    emoji_count += 1
+        # check if content contains only emojis:
+        for item in cur_message:
+            if item in UNICODE_EMOJI:
+                emoji_count += 1
 
             if len(cur_message) == emoji_count:
                 self.message_count_emoji += 1
                 return False
-            else:
-                return True
+            return True
 
     def get_message_count(self):
         """returns message counts"""
