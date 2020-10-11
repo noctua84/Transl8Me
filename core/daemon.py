@@ -22,7 +22,7 @@ class Daemon:
                 # exit first parent
                 sys.exit(0)
         except OSError as err:
-            sys.stderr.write("fork #1 failed: {0}\n".format(err))
+            sys.stderr.write(f"fork #1 failed: {err}\n")
             sys.exit(1)
 
         # decouple from parent environment
@@ -37,7 +37,7 @@ class Daemon:
                 # exit from second parent
                 sys.exit(0)
         except OSError as err:
-            sys.stderr.write("fork #2 failed: {0}\n".format(err))
+            sys.stderr.write(f"fork #2 failed: {err}\n")
             sys.exit(1)
 
         # redirect standard file descriptors
@@ -73,8 +73,8 @@ class Daemon:
             pid = None
 
         if pid:
-            message = "pidfile {0} already exist. " + "Daemon already running?\n"
-            sys.stderr.write(message.format(self.pidfile))
+            message = f"pidfile {self.pidfile} already exist. Daemon already running?\n"
+            sys.stderr.write(message)
             sys.exit(1)
 
         # Start the daemon
@@ -92,8 +92,8 @@ class Daemon:
             pid = None
 
         if not pid:
-            message = "pidfile {0} does not exist. " + "Daemon not running?\n"
-            sys.stderr.write(message.format(self.pidfile))
+            message = f"pidfile {self.pidfile} does not exist. Daemon not running?\n"
+            sys.stderr.write(message)
             return  # not an error in a restart
 
         # Try killing the daemon process

@@ -14,7 +14,6 @@ from core.daemon import Daemon
 with open("config.json") as config_file:
     config = json.load(config_file)
 
-
 if config is not None:
     DSN = config["global_settings"]["sentry_dsn"]
 else:

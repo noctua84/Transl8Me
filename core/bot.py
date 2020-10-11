@@ -1,10 +1,8 @@
 """everything needed to create the actual bot."""
-import discord
 import time
 import asyncio
-
+import discord
 from sentry_sdk import capture_exception
-
 from controllers.messagecontroller import MessageController
 from handler.messages import Messages
 from handler.validations import Validations
@@ -20,21 +18,21 @@ class Bot(discord.Client):
     def __init__(self, config, **options):
         super().__init__(**options)
         self.msg = Messages()
-        self.val = Validations()
-        self.t = TranslateMe(config)
-        self.message_controller = MessageController(config, self.msg)
+        self.val = Validations(config["commands"])
+        self.trans = TranslateMe(config)
+        self.message_controller = MessageController(self.trans, self.msg)
 
     def set_client(self, client):
         """method to supply the actual client-instance"""
         self.client = client
 
-    # einloggen:
+    # action on login:
     async def on_ready(self):
         """async method called when the bot is logged in"""
         print("Bot online.")
         print(self.user.name)
 
-    # wenn nachrichten gepostet werden:
+    # action on message sent to channel:
     async def on_message(self, message):
         """async method called whenever a message is sent
         and the bot belongs to the channel."""
@@ -64,15 +62,11 @@ class Bot(discord.Client):
                     context, self.enable_translate
                 )
 
-                print(context)
-                print(self.enable_translate)
-
                 if context == "start":
                     self.enable_translate = True
-                else:
-                    self.enable_translate = False
 
-                print(self.enable_translate)
+                if context == "stop":
+                    self.enable_translate = False
 
                 if result["embed"] != "":
                     await message.channel.send(embed=result["embed"])
@@ -94,12 +88,13 @@ class Bot(discord.Client):
             else:
                 self.msg.message_count_all += 1
 
+    # function for background task: archive stats
     async def save_msg_stats(self):
         await self.client.wait_until_ready()
 
         while not self.client.is_closed():
             cur_msg_count = self.msg.get_message_count()
-            cur_translation_count = self.t.get_language_counts()
+            cur_translation_count = self.trans.get_language_counts()
 
             try:
                 with open("stats.txt", "a+") as file:

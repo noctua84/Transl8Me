@@ -14,15 +14,17 @@
   },
   "language": {
     "supported": {
-      "<language>": "<language>"
     }
   },
   "commands": {
-    "restricted": {
-      "<command>": "<command>"
+    "implemented": {
+      "start": "start",
+      "stop": "stop",
+      "stats": "stats",
+      "help": "help",
+      "status": "status"
     },
-    "allowed": {
-      "<command>": "<command>"
+    "restricted": {
     }
   }
 }

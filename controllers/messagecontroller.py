@@ -6,8 +6,8 @@ from handler.commands import Commands
 class MessageController:
     """class supplying methods to process incoming messages"""
 
-    def __init__(self, config, validation):
-        self.translation = TranslateMe(config)
+    def __init__(self, translation, validation):
+        self.translation = translation
         self.message_stats = validation
 
     def commands(self, command, enable_translate):

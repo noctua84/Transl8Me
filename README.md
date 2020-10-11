@@ -1,28 +1,45 @@
-[![DeepSource](https://static.deepsource.io/deepsource-badge-light-mini.svg)](https://deepsource.io/gh/noctua84/Transl8Me/?ref=repository-badge)  
+![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/noctua84/transl8me)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) 
 [![DeepSource](https://deepsource.io/gh/noctua84/Transl8Me.svg/?label=active+issues&show_trend=true)](https://deepsource.io/gh/noctua84/Transl8Me/?ref=repository-badge)
 [![DeepSource](https://deepsource.io/gh/noctua84/Transl8Me.svg/?label=resolved+issues&show_trend=true)](https://deepsource.io/gh/noctua84/Transl8Me/?ref=repository-badge)  
 [![CodeFactor](https://www.codefactor.io/repository/github/noctua84/transl8me/badge)](https://www.codefactor.io/repository/github/noctua84/transl8me)
 ![CodeInspector](https://www.code-inspector.com/project/12992/status/svg)
 ![CodeInspector](https://www.code-inspector.com/project/12992/score/svg)  
 ![Python application](https://github.com/noctua84/Transl8Me/workflows/Python%20application/badge.svg)  
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 
 ## Transl8Me
 
 Discord-Bot to translate incoming messages.  
-Once started, the Bot simply translates every incoming message from english into german
-and from german to english.  
-Frensh translation is also possible as a third language.
+Once started, the Bot simply translates every incoming message.  
+Currently supported languages:  
+1. German  
+2. English  
+3. Frensh
+4. Russian
 
 Other languages are currently not supported.
 
-### Bot-Commands:
+Each language mentioned as supported can be source and target of a translation.
+
+Currently supported commands:  
+help, status, start, stop and stats
+
+### Bot-Commands (all users):
 
 ```
 $help: shows help
-$start: starts translation
-$stop: stops translation
 $status: show if bot is translating or not.
+```
+
+### Bot-Commands (admin only):  
+```
+$start: starts the translation service
+$stop: stops the translation service
+$stats: shows some basic message and translation stats*
+-------------------------------------------------------
+* the stats are currently available as long as the bot is running.  
+no other details than overall are currently possible.
 ```
 
 ### Link to invite the bot:
@@ -50,10 +67,38 @@ _Tested with Ubuntu Server 20.04_
 5. modify config-settings based on your infrastructure and used tools.
 ```
 
+### Settings
+Below is described what can be tweeked and which tools can be integrated.  
+Tools are not required for the bot to work.  
+Customisations, especially those for language are required for the bot to work.
+
+**Important**  
+If no command-customisation is done, every command will be treated as allowed! 
+
+#### Tools
 ```
 Currently pre integrated but not initially configured tools:
 1. Sentry
 2. Datadog
+```
+
+#### Customizations
+```
+To customize the bot to your own needs, you can set language and command-restrictions via config.json-file.
+1. language: supplies all languages supported for translation.*
+2. commands: supplies settings for restricted commands.*|**|***
+------------------------------------------------------------------------------
+* the settings are intedet to be key = value.
+e.g.:  
+"de": "de" for language  
+"start": "start" for commands
+
+** theoreticaly every imaginable command can be added, but only supported
+and therefore implemented commands will be interpreted by the bot.
+Implemented commands are found within config under commands.implemented section.
+
+*** if no command is restrictet, the bot will automatically use the commands 
+mentioned in the commands.implemented section.
 ```
 
 ### Control the service

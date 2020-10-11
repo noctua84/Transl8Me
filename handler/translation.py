@@ -8,7 +8,7 @@ import discord
 class TranslateMe:
     """Class supplying translation related methods"""
 
-    lang_counts = {"de": 0, "fr": 0, "en": 0, "ru": 0, "other": 0}
+    lang_counts = {}
 
     def __init__(self, config):
         self.src_lang = ""
@@ -18,6 +18,11 @@ class TranslateMe:
         if self.config["global_settings"]["datadog_metrics"]:
             options = {"statsd_host": "127.0.0.1", "statsd_port": 8125}
             initialize(**options)
+
+        for language in config["language"]["supported"]:
+            self.lang_counts[language] = 0
+
+        self.lang_counts["other"] = 0
 
     def get_language(self, text):
         """method to extract the language of a given text"""
@@ -47,7 +52,13 @@ class TranslateMe:
 
     def generate_embed(self, message):
         """Method to manage the translation"""
-        valid_languages = ["de", "en", "fr", "ru"]
+        valid_languages = []
+
+        for language in self.config["language"]["supported"]:
+            valid_languages.append(language)
+
+        print(f"Valid languages: {valid_languages}")
+
         trans_messages = self.translate_text(message.content, valid_languages)
 
         if trans_messages != {}:

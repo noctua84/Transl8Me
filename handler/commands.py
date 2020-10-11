@@ -30,6 +30,7 @@ class Commands:
     @staticmethod
     def trigger_translation(command: str, enable_translate: bool):
         """triggers translation"""
+
         if command == "start" and not enable_translate:
             state = discord.Embed(
                 colour=discord.Colour(0x7ED321), description="start translation.."
