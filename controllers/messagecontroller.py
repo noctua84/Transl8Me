@@ -1,5 +1,4 @@
 """Module processors"""
-from handler.translation import TranslateMe
 from handler.commands import Commands
 
 

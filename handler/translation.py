@@ -31,7 +31,7 @@ class TranslateMe:
 
     def translate_text(self, text, valid_languages: list) -> dict:
         """method to translate a given text based on the supplied language code"""
-        t = Translator()
+        trans = Translator()
         translations = {}
         lang_count = 1
 
@@ -42,7 +42,7 @@ class TranslateMe:
             valid_languages.remove(self.src_lang)
 
             for lang in valid_languages:
-                result = t.translate(text, lang)
+                result = trans.translate(text, lang)
                 translations[lang_count] = result
                 lang_count += 1
         else:
