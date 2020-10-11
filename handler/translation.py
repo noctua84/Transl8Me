@@ -19,10 +19,10 @@ class TranslateMe:
             options = {"statsd_host": "127.0.0.1", "statsd_port": 8125}
             initialize(**options)
 
-        for language in config["language"]["supported"]:
-            self.lang_counts[language] = 0
-
+        # generate language-counts dict:
+        self.lang_counts = {language: 0 for language in config["language"]["supported"]}
         self.lang_counts["other"] = 0
+        print(self.lang_counts)
 
     def get_language(self, text):
         """method to extract the language of a given text"""
@@ -35,10 +35,15 @@ class TranslateMe:
         translations = {}
         lang_count = 1
 
+        self.lang_counts.update(
+            {
+                lang_id: value + 1
+                for lang_id, value in self.lang_counts.items()
+                if lang_id == self.src_lang
+            }
+        )
+
         if self.src_lang in valid_languages:
-            for lang_id in self.lang_counts:
-                if lang_id == self.src_lang:
-                    self.lang_counts[lang_id] += 1
             valid_languages.remove(self.src_lang)
 
             for lang in valid_languages:

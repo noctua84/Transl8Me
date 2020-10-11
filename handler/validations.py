@@ -10,11 +10,16 @@ class Validations:
         self.open = []
 
         if len(config["restricted"]) > 0:
-            for command in config["implemented"]:
-                if command in config["restricted"]:
-                    self.restricted.append(command)
-                else:
-                    self.open.append(command)
+            self.restricted = [
+                command
+                for command in config["implemented"]
+                if command in config["restricted"]
+            ]
+            self.open = [
+                command
+                for command in config["implemented"]
+                if command not in config["restricted"]
+            ]
 
         else:
             for command in config["implemented"]:
@@ -28,11 +33,15 @@ class Validations:
         """validates if message-author is admin"""
         admin = False
         cur_members = client.get_all_members()
+        cur_member = ""
+
         for member in cur_members:
             if member == message.author:
-                for role in member.roles:
-                    if role.name == "Admin":
-                        admin = True
+                cur_member = member
+
+        for role in cur_member.roles:
+            if role.name == "Admin":
+                admin = True
 
         return admin
 
