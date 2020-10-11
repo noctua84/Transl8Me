@@ -31,19 +31,17 @@ class Validations:
     @staticmethod
     def validate_admin_role(message, client) -> bool:
         """validates if message-author is admin"""
-        admin = False
-        cur_members = client.get_all_members()
         cur_member = ""
 
-        for member in cur_members:
+        for member in client.get_all_members():
             if member == message.author:
                 cur_member = member
 
         for role in cur_member.roles:
             if role.name == "Admin":
-                admin = True
+                return True
 
-        return admin
+        return False
 
     def validate_restrictions(self, context, is_admin) -> bool:
         """validates if command has restrictions or not and if these are met"""
