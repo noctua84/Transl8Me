@@ -28,20 +28,11 @@ class Validations:
         print(self.restricted)
         print(self.open)
 
-    @staticmethod
-    def validate_admin_role(message, client) -> bool:
+    def validate_admin_role(self, message, client) -> bool:
         """validates if message-author is admin"""
-        cur_member = ""
-
-        for member in client.get_all_members():
-            if member == message.author:
-                cur_member = member
-
-        for role in cur_member.roles:
-            if role.name == "Admin":
-                return True
-
-        return False
+        return self.__check_admin_role(
+            self.__extract_member(client.get_all_members(), message.author)
+        )
 
     def validate_restrictions(self, context, is_admin) -> bool:
         """validates if command has restrictions or not and if these are met"""
@@ -49,4 +40,18 @@ class Validations:
             return True
         if context in self.open:
             return True
+        return False
+
+    @staticmethod
+    def __extract_member(members, author):
+        for member in members:
+            if member == author:
+                return member
+
+    @staticmethod
+    def __check_admin_role(member):
+        for role in member.roles:
+            if role.name == "Admin":
+                return True
+
         return False
