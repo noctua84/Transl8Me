@@ -44,12 +44,14 @@ class Validations:
 
     @staticmethod
     def __extract_member(members, author):
+        """Method to extract the member-object of the message author"""
         for member in members:
             if member == author:
                 return member
 
     @staticmethod
-    def __check_admin_role(member):
+    def __check_admin_role(member) -> bool:
+        """Method to check if member has admin privileges"""
         for role in member.roles:
             if role.name == "Admin":
                 return True
