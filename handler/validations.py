@@ -49,11 +49,14 @@ class Validations:
             if member == author:
                 return member
 
+        return None
+
     @staticmethod
     def __check_admin_role(member) -> bool:
         """Method to check if member has admin privileges"""
-        for role in member.roles:
-            if role.name == "Admin":
-                return True
+        if member is not None:
+            for role in member.roles:
+                if role.name == "Admin":
+                    return True
 
-        return False
+            return False

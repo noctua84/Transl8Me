@@ -4,11 +4,9 @@ import platform
 import sys
 import os
 import sentry_sdk
-from discord import LoginFailure
-from sentry_sdk import capture_exception
 from sentry_sdk.integrations.aiohttp import AioHttpIntegration
-from core.bot import Bot
 from core.daemon import Daemon
+from core.connect import Connect
 
 # load config and activate sentry if set.
 with open("config.json") as config_file:
@@ -31,23 +29,15 @@ sentry_sdk.init(
     environment="production",
 )
 
+con = Connect(config)
+
 
 # set up deamon class:
 class BotDaemon(Daemon):
     """Actual Daemon overwriting its parent run-method"""
 
     def run(self):
-        try:
-            d_token = config["global_settings"]["bot_token"]
-            daemon_client = Bot(config)
-            daemon_client.set_client(daemon_client)
-            daemon_client.run(d_token)
-        except TypeError as type_exception_daemon:
-            # should not occur - just for reference
-            capture_exception(type_exception_daemon)
-        except LoginFailure as bot_token_exception_daemon:
-            # is raised if bot-token is wrong or missing
-            capture_exception(bot_token_exception_daemon)
+        con.connect_bot()
 
 
 if __name__ == "__main__":
@@ -75,16 +65,7 @@ if __name__ == "__main__":
 
     elif cur_os == "Windows":
         # bot
-        try:
-            token = config["global_settings"]["bot_token"]
-            client = Bot(config)
-            client.set_client(client)
-            # client.loop.create_task(client.save_msg_stats())
-            client.run(token)
-        except TypeError as type_exception:
-            capture_exception(type_exception)
-        except LoginFailure as bot_token_exception:
-            capture_exception(bot_token_exception)
+        con.connect_bot()
 
     else:
         print("could not recognize OS")

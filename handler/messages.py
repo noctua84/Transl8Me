@@ -30,10 +30,8 @@ class Messages:
 
         if img_only or emoji_only:
             return False
-        else:
-            return True
 
-    def get_message_count(self):
+    def get_message_count(self) -> dict:
         """returns message counts"""
 
         return {
@@ -69,11 +67,9 @@ class Messages:
                 return False
             return True
 
-    def __check_img_only(self, content, attachment):
+    def __check_img_only(self, content, attachment) -> bool:
         """Method to check if message contains only images"""
         attachment_type = attachment.filename.split(".")
         if content == "" and attachment_type in ["jpg", "png", "gif", "jpeg"]:
             self.message_count_img += 1
             return True
-        else:
-            return False
