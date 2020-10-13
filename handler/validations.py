@@ -54,9 +54,8 @@ class Validations:
     @staticmethod
     def __check_admin_role(member) -> bool:
         """Method to check if member has admin privileges"""
-        if member is not None:
-            for role in member.roles:
-                if role.name == "Admin":
-                    return True
+        for role in member.roles:
+            if role.name == "Admin":
+                return True
 
-            return False
+        return False
