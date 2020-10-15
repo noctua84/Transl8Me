@@ -24,4 +24,3 @@ class Connect:
 
     def something_else(self):
         """just a dummy method doing nothing but be there"""
-        pass

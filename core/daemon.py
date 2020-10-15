@@ -3,7 +3,6 @@ import os
 import sys
 import atexit
 import signal
-import time
 
 
 class Daemon:
@@ -110,6 +109,7 @@ class Daemon:
         """internal method to kill the current running process"""
         try:
             os.kill(pid, signal.SIGTERM)
+            self.delete_pid()
         except OSError as err:
             error = str(err.args)
             if error.find("No such process") > 0 and os.path.exists(self.pidfile):

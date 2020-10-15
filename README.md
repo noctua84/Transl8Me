@@ -1,12 +1,24 @@
-![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/noctua84/transl8me)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) 
-[![DeepSource](https://deepsource.io/gh/noctua84/Transl8Me.svg/?label=active+issues&show_trend=true)](https://deepsource.io/gh/noctua84/Transl8Me/?ref=repository-badge)
-[![DeepSource](https://deepsource.io/gh/noctua84/Transl8Me.svg/?label=resolved+issues&show_trend=true)](https://deepsource.io/gh/noctua84/Transl8Me/?ref=repository-badge)  
-[![CodeFactor](https://www.codefactor.io/repository/github/noctua84/transl8me/badge)](https://www.codefactor.io/repository/github/noctua84/transl8me)
-![CodeInspector](https://www.code-inspector.com/project/12992/status/svg)
-![CodeInspector](https://www.code-inspector.com/project/12992/score/svg)  
+## Statistics
 ![Python application](https://github.com/noctua84/Transl8Me/workflows/Python%20application/badge.svg)  
 
+![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/noctua84/transl8me)
+![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)  
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/noctua84/transl8me)
+![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/noctua84/transl8me)  
+
+![CodeFactor](https://www.codefactor.io/repository/github/noctua84/transl8me/badge)  
+
+![CodeInspector](https://www.code-inspector.com/project/12992/status/svg)
+![CodeInspector](https://www.code-inspector.com/project/12992/score/svg)  
+![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/noctua84/Transl8Me)
+![Code Climate issues](https://img.shields.io/codeclimate/issues/noctua84/Transl8Me)
+![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/noctua84/Transl8Me)  
+
+![DeepSource](https://deepsource.io/gh/noctua84/Transl8Me.svg/?label=active+issues&show_trend=true)
+![DeepSource](https://deepsource.io/gh/noctua84/Transl8Me.svg/?label=resolved+issues&show_trend=true)  
+
+![GitHub commit activity](https://img.shields.io/github/commit-activity/y/noctua84/transl8me)
+![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/noctua84/transl8me/latest)
 
 ## Transl8Me
 
