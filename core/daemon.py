@@ -70,16 +70,19 @@ class Daemon:
         # Start the daemon
         self.daemonize()
         self.run()
+        print("Process started")
 
     def stop(self):
         """Stop the daemon."""
         # Get the pid from the pidfile and kill the process:
         self.__kill_process(self.__check_pid())
+        print("Process stopped")
 
     def restart(self):
         """Restart the daemon."""
         self.stop()
         self.start()
+        print("Process restarted")
 
     def run(self):
         """This method has to be overridden in specific daemon-class
@@ -95,12 +98,10 @@ class Daemon:
 
         if pid:
             message = f"pidfile {self.pidfile} already exist. Daemon already running?\n"
-            print(message)
             sys.stderr.write(message)
             sys.exit(1)
         else:
             message = f"pidfile {self.pidfile} does not exist. Daemon not running?\n"
-            print(message)
             sys.stderr.write(message)
 
         return pid
@@ -108,14 +109,11 @@ class Daemon:
     def __kill_process(self, pid):
         """internal method to kill the current running process"""
         try:
-            while 1:
-                os.kill(pid, signal.SIGTERM)
-                time.sleep(0.1)
+            os.kill(pid, signal.SIGTERM)
         except OSError as err:
             error = str(err.args)
-            if error.find("No such process") > 0:
-                if os.path.exists(self.pidfile):
-                    os.remove(self.pidfile)
+            if error.find("No such process") > 0 and os.path.exists(self.pidfile):
+                os.remove(self.pidfile)
             else:
                 print(str(err.args))
                 sys.exit(1)
