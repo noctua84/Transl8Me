@@ -51,10 +51,13 @@ if __name__ == "__main__":
         if len(sys.argv) == 2:
             if sys.argv[1] == "start":
                 daemon.start()
+                print("bot started..")
             elif sys.argv[1] == "stop":
                 daemon.stop()
+                print("bot stopped..")
             elif sys.argv[1] == "restart":
                 daemon.restart()
+                print("bot restarted..")
             else:
                 print("Unknown command")
                 sys.exit(2)

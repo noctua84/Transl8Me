@@ -64,8 +64,29 @@ class Daemon:
 
     def start(self):
         """Start the daemon."""
-
         # Check for a pidfile to see if the daemon already runs
+        self.__check_pid()
+
+        # Start the daemon
+        self.daemonize()
+        self.run()
+
+    def stop(self):
+        """Stop the daemon."""
+        # Get the pid from the pidfile and kill the process:
+        self.__kill_process(self.__check_pid())
+
+    def restart(self):
+        """Restart the daemon."""
+        self.stop()
+        self.start()
+
+    def run(self):
+        """This method has to be overridden in specific daemon-class
+        inheriting from this"""
+
+    def __check_pid(self):
+        """internal method to check if pid exists"""
         try:
             with open(self.pidfile, "r") as pid_file:
                 pid = int(pid_file.read().strip())
@@ -74,29 +95,18 @@ class Daemon:
 
         if pid:
             message = f"pidfile {self.pidfile} already exist. Daemon already running?\n"
+            print(message)
             sys.stderr.write(message)
             sys.exit(1)
-
-        # Start the daemon
-        self.daemonize()
-        self.run()
-
-    def stop(self):
-        """Stop the daemon."""
-
-        # Get the pid from the pidfile
-        try:
-            with open(self.pidfile, "r") as pid_file:
-                pid = int(pid_file.read().strip())
-        except IOError:
-            pid = None
-
-        if not pid:
+        else:
             message = f"pidfile {self.pidfile} does not exist. Daemon not running?\n"
+            print(message)
             sys.stderr.write(message)
-            return  # not an error in a restart
 
-        # Try killing the daemon process
+        return pid
+
+    def __kill_process(self, pid):
+        """internal method to kill the current running process"""
         try:
             while 1:
                 os.kill(pid, signal.SIGTERM)
@@ -109,12 +119,3 @@ class Daemon:
             else:
                 print(str(err.args))
                 sys.exit(1)
-
-    def restart(self):
-        """Restart the daemon."""
-        self.stop()
-        self.start()
-
-    def run(self):
-        """This method has to be overridden in specific daemon-class
-        inheriting from this"""

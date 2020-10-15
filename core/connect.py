@@ -21,3 +21,7 @@ class Connect:
             capture_exception(type_exception)
         except LoginFailure as bot_token_exception:
             capture_exception(bot_token_exception)
+
+    def something_else(self):
+        """just a dummy method doing nothing but be there"""
+        pass
