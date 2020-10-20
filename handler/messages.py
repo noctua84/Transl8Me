@@ -25,7 +25,11 @@ class Messages:
         evaluates if message should be translated or not.
         filters messages containing only emojis.
         """
-        img_only = self.__check_img_only(message.content, message.attachments[0])
+        img_only = False
+
+        if message.attachments:
+            img_only = self.__check_img_only(message.content, message.attachments[0])
+
         emoji_only = self.__check_emojis_only(message.content.split(" "))
 
         if img_only or emoji_only:
@@ -63,11 +67,14 @@ class Messages:
         for item in split_message:
             if item in UNICODE_EMOJI:
                 emoji_count += 1
+            elif str(item).startswith(":") and str(item).endswith(":"):
+                emoji_count += 1
 
-            if len(split_message) == emoji_count:
-                self.message_count_emoji += 1
-                return False
+        if len(split_message) == emoji_count:
+            self.message_count_emoji += 1
             return True
+
+        return False
 
     def __check_img_only(self, content, attachment) -> bool:
         """Method to check if message contains only images"""

@@ -108,12 +108,13 @@ class Daemon:
     def __kill_process(self, pid):
         """internal method to kill the current running process"""
         try:
-            os.kill(pid, signal.SIGTERM)
-            self.delete_pid()
+            while 1:
+                os.kill(pid, signal.SIGTERM)
         except OSError as err:
             error = str(err.args)
-            if error.find("No such process") > 0 and os.path.exists(self.pidfile):
-                os.remove(self.pidfile)
+            if error.find("No such process") > 0:
+                if os.path.exists(self.pidfile):
+                    os.remove(self.pidfile)
             else:
                 print(str(err.args))
                 sys.exit(1)
