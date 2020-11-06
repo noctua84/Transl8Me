@@ -3,6 +3,7 @@ import os
 import sys
 import atexit
 import signal
+import time
 
 
 class Daemon:
@@ -63,19 +64,54 @@ class Daemon:
 
     def start(self):
         """Start the daemon."""
+
         # Check for a pidfile to see if the daemon already runs
-        self.__check_pid()
+        try:
+            with open(self.pidfile, 'r') as pf:
+
+                pid = int(pf.read().strip())
+        except IOError:
+            pid = None
+
+        if pid:
+            message = "pidfile {0} already exist. " + \
+                      "Daemon already running?\n"
+            sys.stderr.write(message.format(self.pidfile))
+            sys.exit(1)
 
         # Start the daemon
         self.daemonize()
         self.run()
-        print("Process started")
 
     def stop(self):
         """Stop the daemon."""
-        # Get the pid from the pidfile and kill the process:
-        self.__kill_process(self.__check_pid())
-        print("Process stopped")
+    
+        # Get the pid from the pidfile
+        try:
+            with open(self.pidfile, 'r') as pf:
+                pid = int(pf.read().strip())
+        except IOError:
+            pid = None
+    
+        if not pid:
+            message = "pidfile {0} does not exist. " + \
+                      "Daemon not running?\n"
+            sys.stderr.write(message.format(self.pidfile))
+            return  # not an error in a restart
+    
+        # Try killing the daemon process
+        try:
+            while 1:
+                os.kill(pid, signal.SIGTERM)
+                time.sleep(0.1)
+        except OSError as err:
+            e = str(err.args)
+            if e.find("No such process") > 0:
+                if os.path.exists(self.pidfile):
+                    os.remove(self.pidfile)
+            else:
+                print(str(err.args))
+                sys.exit(1)
 
     def restart(self):
         """Restart the daemon."""
@@ -86,35 +122,3 @@ class Daemon:
     def run(self):
         """This method has to be overridden in specific daemon-class
         inheriting from this"""
-
-    def __check_pid(self):
-        """internal method to check if pid exists"""
-        try:
-            with open(self.pidfile, "r") as pid_file:
-                pid = int(pid_file.read().strip())
-        except IOError:
-            pid = None
-
-        if pid:
-            message = f"pidfile {self.pidfile} already exist. Daemon already running?\n"
-            sys.stderr.write(message)
-            sys.exit(1)
-        else:
-            message = f"pidfile {self.pidfile} does not exist. Daemon not running?\n"
-            sys.stderr.write(message)
-
-        return pid
-
-    def __kill_process(self, pid):
-        """internal method to kill the current running process"""
-        try:
-            while 1:
-                os.kill(pid, signal.SIGTERM)
-        except OSError as err:
-            error = str(err.args)
-            if error.find("No such process") > 0:
-                if os.path.exists(self.pidfile):
-                    os.remove(self.pidfile)
-            else:
-                print(str(err.args))
-                sys.exit(1)

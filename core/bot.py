@@ -55,23 +55,25 @@ class Bot(discord.Client):
             context = message.content.split("$")[1]
 
             # handle commands with restrictions:
-            if self.val.validate_restrictions(
-                context, self.val.validate_admin_role(message, self.client)
-            ):
-                result = self.message_controller.commands(
-                    context, self.enable_translate
-                )
+            #if self.val.validate_restrictions(
+            #    context, self.val.validate_admin_role(message, self.client)
+            #):
+            #
+            #else:
+            #    print("nothing to do")
 
-                if context == "start":
-                    self.enable_translate = True
+            result = self.message_controller.commands(
+                context, self.enable_translate
+            )
 
-                if context == "stop":
-                    self.enable_translate = False
+            if context == "start":
+                self.enable_translate = True
 
-                if result["embed"] != "":
-                    await message.channel.send(embed=result["embed"])
-            else:
-                print("nothing to do")
+            if context == "stop":
+                self.enable_translate = False
+
+            if result["embed"] != "":
+                await message.channel.send(embed=result["embed"])
 
         # ---------------------------------------------------------------------------------------
         # general message reaction:
