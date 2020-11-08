@@ -4,6 +4,8 @@ from textblob import TextBlob
 from googletrans import Translator
 import discord
 
+# implement google cloud translate api (not free sadly) [test]
+
 
 class TranslateMe:
     """Class supplying translation related methods"""

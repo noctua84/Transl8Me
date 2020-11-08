@@ -25,14 +25,10 @@
 Discord-Bot to translate incoming messages.  
 Once started, the Bot simply translates every incoming message.  
 Currently supported languages:  
-1. German  
-2. English  
-3. Frensh
-4. Russian
+If invited: german, english, frensh and russian.
+If selfhosted: any language desired.
 
-Other languages are currently not supported.
-
-Each language mentioned as supported can be source and target of a translation.
+Each language can be source and target of a translation.
 
 Currently supported commands:  
 help, status, start, stop and stats
