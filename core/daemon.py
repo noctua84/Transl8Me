@@ -1,4 +1,4 @@
-"""This is a Linux-Deamon"""
+"""This is a Linux-Deamon."""
 import os
 import sys
 import atexit
@@ -59,7 +59,7 @@ class Daemon:
             file.write(pid + "\n")
 
     def delete_pid(self):
-        """Remove the pid-file"""
+        """Remove the pid-file."""
         os.remove(self.pidfile)
 
     def start(self):
@@ -121,4 +121,4 @@ class Daemon:
 
     def run(self):
         """This method has to be overridden in specific daemon-class
-        inheriting from this"""
+        inheriting from this."""

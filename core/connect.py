@@ -1,10 +1,12 @@
+"""Module to handle the bot-connection and related things."""
+import discord
 from discord import LoginFailure
 from sentry_sdk import capture_exception
 from .bot import Bot
 
 
 class Connect:
-    """class handeling the connection of the bot to the server"""
+    """class to handle the connection of the bot to the server."""
 
     def __init__(self, config):
         self.config = config
@@ -13,7 +15,8 @@ class Connect:
         """Function to connect the bot to the server"""
         try:
             token = self.config["global_settings"]["bot_token"]
-            client = Bot(self.config)
+            intents = discord.Intents.all()
+            client = Bot(self.config, intents=intents)
             client.set_client(client)
             # client.loop.create_task(client.save_msg_stats())
             client.run(token)
@@ -23,4 +26,4 @@ class Connect:
             capture_exception(bot_token_exception)
 
     def something_else(self):
-        """just a dummy method doing nothing but be there"""
+        """A dummy method to do nothing but be there."""

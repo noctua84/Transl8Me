@@ -42,27 +42,31 @@ class BotDaemon(Daemon):
 
 if __name__ == "__main__":
     cur_os = platform.system()
+    cur_env = config["global_settings"]["env"]
     cur_pid = os.getpid()
     print(cur_pid)
 
     if cur_os == "Linux":
-        pid_file = config["global_settings"]["pid_file"]
-        daemon = BotDaemon(pid_file)
-        if len(sys.argv) == 2:
-            if sys.argv[1] == "start":
-                daemon.start()
-            elif sys.argv[1] == "stop":
-                daemon.stop()
-            elif sys.argv[1] == "restart":
-                daemon.restart()
-            else:
-                print("Unknown command")
-                sys.exit(2)
-            sys.exit(0)
+        if cur_env == "dev":
+            con.connect_bot()
         else:
-            print("usage: %s start|stop|restart" % sys.argv[0])
-            sys.exit(2)
-
+            pid_file = config["global_settings"]["pid_file"]
+            daemon = BotDaemon(pid_file)
+            if len(sys.argv) == 2:
+                if sys.argv[1] == "start":
+                    daemon.start()
+                elif sys.argv[1] == "stop":
+                    daemon.stop()
+                elif sys.argv[1] == "restart":
+                    daemon.restart()
+                else:
+                    print("Unknown command")
+                    sys.exit(2)
+                sys.exit(0)
+            else:
+                print("usage: %s start|stop|restart" % sys.argv[0])
+                sys.exit(2)
+                
     elif cur_os == "Windows":
         # bot
         con.connect_bot()

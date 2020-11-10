@@ -1,16 +1,16 @@
-"""some bot commands"""
+"""Module for bot commands."""
 import discord
 
 
 class Commands:
-    """class supplying methods for each command and one controlling method"""
+    """class to supply methods for each command and one controlling method."""
 
     def __init__(self):
         pass
 
     @staticmethod
     def get_help():
-        """applies help response"""
+        """applies help response."""
         help_text = discord.Embed(
             title="**Info**",
             colour=discord.Colour(0xF8E71C),
@@ -29,7 +29,7 @@ class Commands:
 
     @staticmethod
     def trigger_translation(command: str, enable_translate: bool):
-        """triggers translation"""
+        """triggers translation."""
 
         if command == "start" and not enable_translate:
             state = discord.Embed(
@@ -47,7 +47,7 @@ class Commands:
 
     @staticmethod
     def get_status(translation_state):
-        """applies status response"""
+        """applies status response."""
         if translation_state:
             cur_status = "translation running."
         else:
@@ -61,7 +61,7 @@ class Commands:
 
     @staticmethod
     def get_stats(language_stats: dict, message_stats: dict):
-        """renders embed for language statistics"""
+        """renders embed for language statistics."""
 
         stats_embed = discord.Embed(
             colour=discord.Colour(0xF5A623),

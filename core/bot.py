@@ -5,7 +5,8 @@ import discord
 from sentry_sdk import capture_exception
 from controllers.messagecontroller import MessageController
 from handler.messages import Messages
-from handler.validations import Validations
+from validations.validatecommands import ValidateCommands
+from validations.validateroles import ValidateRoles
 from handler.translation import TranslateMe
 
 
@@ -18,17 +19,18 @@ class Bot(discord.Client):
     def __init__(self, config, **options):
         super().__init__(**options)
         self.msg = Messages()
-        self.val = Validations(config["commands"])
+        self.val_com = ValidateCommands(config["commands"])
+        self.val_role = ValidateRoles
         self.trans = TranslateMe(config)
         self.message_controller = MessageController(self.trans, self.msg)
 
     def set_client(self, client):
-        """method to supply the actual client-instance"""
+        """method to supply the actual client-instance."""
         self.client = client
 
     # action on login:
     async def on_ready(self):
-        """async method called when the bot is logged in"""
+        """async method called when the bot is logged in."""
         print("Bot online.")
         print(self.user.name)
 
@@ -55,25 +57,23 @@ class Bot(discord.Client):
             context = message.content.split("$")[1]
 
             # handle commands with restrictions:
-            #if self.val.validate_restrictions(
-            #    context, self.val.validate_admin_role(message, self.client)
-            #):
-            #
-            #else:
-            #    print("nothing to do")
-
-            result = self.message_controller.commands(
-                context, self.enable_translate
-            )
-
-            if context == "start":
-                self.enable_translate = True
-
-            if context == "stop":
-                self.enable_translate = False
-
-            if result["embed"] != "":
-                await message.channel.send(embed=result["embed"])
+            if self.val_com.command_restrictions(
+                context, self.val_role.validate_admin_role(message)
+            ):
+                result = self.message_controller.commands(
+                    context, self.enable_translate
+                )
+                
+                if context == "start":
+                    self.enable_translate = True
+    
+                if context == "stop":
+                    self.enable_translate = False
+    
+                if result["embed"] != "":
+                    await message.channel.send(embed=result["embed"])
+            else:
+                print("nothing to do")
 
         # ---------------------------------------------------------------------------------------
         # general message reaction:

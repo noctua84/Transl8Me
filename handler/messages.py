@@ -1,4 +1,4 @@
-"""Module for message handling"""
+"""Module to handle message related things."""
 from emoji import UNICODE_EMOJI
 
 
@@ -38,7 +38,7 @@ class Messages:
         return True
 
     def get_message_count(self) -> dict:
-        """returns message counts"""
+        """returns message counts."""
 
         return {
             "all": self.message_count_all,
@@ -50,7 +50,7 @@ class Messages:
         }
 
     def reset_message_count(self):
-        """Method to reset message counters"""
+        """Method to reset message counters."""
         self.message_count_img = 0
         self.message_count_emoji = 0
         self.message_count_all = 0
@@ -60,7 +60,7 @@ class Messages:
 
     # Helper methods
     def __check_emojis_only(self, split_message: list) -> bool:
-        """Method to check if message contains only emojis"""
+        """Method to check if message contains only emojis."""
         emoji_count = 0
 
         # check if content contains only emojis:
@@ -77,7 +77,7 @@ class Messages:
         return False
 
     def __check_img_only(self, content, attachment) -> bool:
-        """Method to check if message contains only images"""
+        """Method to check if message contains only images."""
         attachment_type = attachment.filename.split(".")
         if content == "" and attachment_type in ["jpg", "png", "gif", "jpeg"]:
             self.message_count_img += 1

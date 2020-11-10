@@ -1,4 +1,4 @@
-"""this is a module docstring"""
+"""Translation module."""
 from datadog import initialize, statsd
 from textblob import TextBlob
 from googletrans import Translator
@@ -8,7 +8,7 @@ import discord
 
 
 class TranslateMe:
-    """Class supplying translation related methods"""
+    """Class to translation related methods."""
 
     lang_counts = {}
 
@@ -27,12 +27,12 @@ class TranslateMe:
         print(self.lang_counts)
 
     def get_language(self, text):
-        """method to extract the language of a given text"""
+        """method to extract the language of a given text."""
         lang = TextBlob(text)
         self.src_lang = lang.detect_language()
 
     def translate_text(self, text, valid_languages: list) -> dict:
-        """method to translate a given text based on the supplied language code"""
+        """method to translate a given text based on the supplied language code."""
         trans = Translator()
         translations = {}
         lang_count = 1
@@ -58,7 +58,7 @@ class TranslateMe:
         return translations
 
     def generate_embed(self, message):
-        """Method to manage the translation"""
+        """Method to manage the translation."""
         valid_languages = []
 
         for language in self.config["language"]["supported"]:
@@ -86,5 +86,5 @@ class TranslateMe:
         return result
 
     def get_language_counts(self):
-        """Method to acquire language counts and other language usage related params"""
+        """Method to acquire language counts and other language usage related params."""
         return self.lang_counts
