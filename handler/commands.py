@@ -10,7 +10,7 @@ class Commands:
 
     @staticmethod
     def get_help():
-        """applies help response."""
+        """Method to create help response."""
         help_text = discord.Embed(
             title="**Info**",
             colour=discord.Colour(0xF8E71C),
@@ -29,8 +29,7 @@ class Commands:
 
     @staticmethod
     def trigger_translation(command: str, enable_translate: bool):
-        """triggers translation."""
-
+        """Method to trigger translation."""
         if command == "start" and not enable_translate:
             state = discord.Embed(
                 colour=discord.Colour(0x7ED321), description="start translation.."
@@ -47,7 +46,7 @@ class Commands:
 
     @staticmethod
     def get_status(translation_state):
-        """applies status response."""
+        """Method to apply status response."""
         if translation_state:
             cur_status = "translation running."
         else:
@@ -61,8 +60,7 @@ class Commands:
 
     @staticmethod
     def get_stats(language_stats: dict, message_stats: dict):
-        """renders embed for language statistics."""
-
+        """Method to render embed for language statistics."""
         stats_embed = discord.Embed(
             colour=discord.Colour(0xF5A623),
             title="**Stats**",

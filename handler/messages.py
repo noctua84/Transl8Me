@@ -4,7 +4,7 @@ from emoji import UNICODE_EMOJI
 
 class Messages:
     """
-    class handling message-related tasks.
+    Class to handle message-related tasks.
     currently checking if a message is translatable functioning as a filter
     for image-only and emoji-only messages requiring no translation.
     """
@@ -22,7 +22,7 @@ class Messages:
 
     def is_translatable(self, message) -> bool:
         """
-        evaluates if message should be translated or not.
+        Message to evaluate if message should be translated or not.
         filters messages containing only emojis.
         """
         img_only = False
@@ -38,7 +38,7 @@ class Messages:
         return True
 
     def get_message_count(self) -> dict:
-        """returns message counts."""
+        """Method to return message counts."""
 
         return {
             "all": self.message_count_all,

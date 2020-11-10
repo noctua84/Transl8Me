@@ -27,12 +27,12 @@ class TranslateMe:
         print(self.lang_counts)
 
     def get_language(self, text):
-        """method to extract the language of a given text."""
+        """Method to extract the language of a given text."""
         lang = TextBlob(text)
         self.src_lang = lang.detect_language()
 
     def translate_text(self, text, valid_languages: list) -> dict:
-        """method to translate a given text based on the supplied language code."""
+        """Method to translate a given text based on the supplied language code."""
         trans = Translator()
         translations = {}
         lang_count = 1

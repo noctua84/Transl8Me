@@ -4,14 +4,14 @@ import asyncio
 import discord
 from sentry_sdk import capture_exception
 from controllers.messagecontroller import MessageController
-from handler.messages import Messages
 from validations.validatecommands import ValidateCommands
 from validations.validateroles import ValidateRoles
+from handler.messages import Messages
 from handler.translation import TranslateMe
 
 
 class Bot(discord.Client):
-    """class representing the bot."""
+    """Class representing the bot."""
 
     client = None
     enable_translate = False
@@ -25,20 +25,21 @@ class Bot(discord.Client):
         self.message_controller = MessageController(self.trans, self.msg)
 
     def set_client(self, client):
-        """method to supply the actual client-instance."""
+        """Method to supply the actual client-instance."""
         self.client = client
 
     # action on login:
     async def on_ready(self):
-        """async method called when the bot is logged in."""
+        """Async method called when the bot is logged in."""
         print("Bot online.")
         print(self.user.name)
 
     # action on message sent to channel:
     async def on_message(self, message):
-        """async method called whenever a message is sent
-        and the bot belongs to the channel."""
-
+        """
+        Async method called whenever a message is sent
+        and the bot belongs to the channel.
+        """
         # general actions:
         if self.client.user == message.author:
             self.msg.message_count_bot += 1
@@ -63,13 +64,13 @@ class Bot(discord.Client):
                 result = self.message_controller.commands(
                     context, self.enable_translate
                 )
-                
+
                 if context == "start":
                     self.enable_translate = True
-    
+
                 if context == "stop":
                     self.enable_translate = False
-    
+
                 if result["embed"] != "":
                     await message.channel.send(embed=result["embed"])
             else:
@@ -92,6 +93,7 @@ class Bot(discord.Client):
 
     # function for background task: archive stats
     async def save_msg_stats(self):
+        """Save message stats."""
         await self.client.wait_until_ready()
 
         while not self.client.is_closed():

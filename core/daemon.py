@@ -7,15 +7,16 @@ import time
 
 
 class Daemon:
-    """A generic daemon class. Usage: subclass the daemon
-    class and override the run() method."""
+    """
+    A generic daemon class. Usage: subclass the daemon
+    class and override the run() method.
+    """
 
     def __init__(self, pidfile):
         self.pidfile = pidfile
 
     def daemonize(self):
         """Deamonize class. UNIX double fork mechanism."""
-
         try:
             pid = os.fork()
             if pid > 0:
@@ -64,7 +65,6 @@ class Daemon:
 
     def start(self):
         """Start the daemon."""
-
         # Check for a pidfile to see if the daemon already runs
         try:
             with open(self.pidfile, 'r') as pf:
@@ -85,20 +85,19 @@ class Daemon:
 
     def stop(self):
         """Stop the daemon."""
-    
         # Get the pid from the pidfile
         try:
             with open(self.pidfile, 'r') as pf:
                 pid = int(pf.read().strip())
         except IOError:
             pid = None
-    
+
         if not pid:
             message = "pidfile {0} does not exist. " + \
                       "Daemon not running?\n"
             sys.stderr.write(message.format(self.pidfile))
             return  # not an error in a restart
-    
+
         # Try killing the daemon process
         try:
             while 1:
@@ -120,5 +119,7 @@ class Daemon:
         print("Process restarted")
 
     def run(self):
-        """This method has to be overridden in specific daemon-class
-        inheriting from this."""
+        """
+        This method has to be overridden in specific daemon-class
+        inheriting from this.
+        """

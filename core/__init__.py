@@ -1,5 +1,4 @@
-"""Module: core"""
-
+"""Module: core."""
 from .bot import Bot
 from .connect import Connect
 from .daemon import Daemon

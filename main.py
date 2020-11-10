@@ -34,9 +34,9 @@ con = Connect(config)
 
 # set up deamon class:
 class BotDaemon(Daemon):
-    """Actual Daemon overwriting its parent run-method"""
-
+    """Actual Daemon overwriting its parent run-method."""
     def run(self):
+        """Override of the daemon function."""
         con.connect_bot()
 
 
@@ -66,7 +66,7 @@ if __name__ == "__main__":
             else:
                 print("usage: %s start|stop|restart" % sys.argv[0])
                 sys.exit(2)
-                
+
     elif cur_os == "Windows":
         # bot
         con.connect_bot()

@@ -6,7 +6,7 @@ from .bot import Bot
 
 
 class Connect:
-    """class to handle the connection of the bot to the server."""
+    """Class to handle the connection of the bot to the server."""
 
     def __init__(self, config):
         self.config = config

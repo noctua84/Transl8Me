@@ -3,14 +3,14 @@ from handler.commands import Commands
 
 
 class MessageController:
-    """class supplying methods to process incoming messages."""
+    """class to supply methods to process incoming messages."""
 
     def __init__(self, translation, validation):
         self.translation = translation
         self.message_stats = validation
 
     def commands(self, command, enable_translate):
-        """process bot commands."""
+        """Method to process bot commands."""
         return {
             "help": Commands.get_help(),
             "start": Commands.trigger_translation(command, enable_translate),
@@ -23,7 +23,7 @@ class MessageController:
         }[command]
 
     def translate_message(self, message):
-        """process translation."""
+        """Method to process translation."""
         self.translation.get_language(message.content)
         translated_message = self.translation.generate_embed(message)
         return translated_message
