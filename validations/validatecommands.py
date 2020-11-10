@@ -35,4 +35,3 @@ class ValidateCommands:
 
     def check_command_prefix(self):
         """check command prefix."""
-        pass
