@@ -31,7 +31,7 @@ class TranslateMe:
         lang = TextBlob(text)
         self.src_lang = lang.detect_language()
 
-    def translate_text(self, text, valid_languages: list) -> dict:
+    def __translate_text(self, text, valid_languages: list) -> dict:
         """Method to translate a given text based on the supplied language code."""
         trans = Translator()
         translations = {}
@@ -64,7 +64,7 @@ class TranslateMe:
         for language in self.config["language"]["supported"]:
             valid_languages.append(language)
 
-        trans_messages = self.translate_text(message.content, valid_languages)
+        trans_messages = self.__translate_text(message.content, valid_languages)
 
         if trans_messages != {}:
             statsd.increment("translated_msg", tags=["environment:develop"])
