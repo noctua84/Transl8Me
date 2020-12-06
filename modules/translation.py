@@ -1,6 +1,6 @@
 """Translation module."""
-from datadog import initialize, statsd
 from textblob import TextBlob
+# from google.cloud import translate_v3
 from googletrans import Translator
 import discord
 
@@ -16,17 +16,17 @@ class TranslateMe:
         self.src_lang = ""
         self.config = config
 
-        # metrics
-        if self.config["global_settings"]["datadog_metrics"]:
-            options = {"statsd_host": "127.0.0.1", "statsd_port": 8125}
-            initialize(**options)
-
         # generate language-counts dict:
         self.lang_counts = {language: 0 for language in config["language"]["supported"]}
         self.lang_counts["other"] = 0
         print(self.lang_counts)
+        
+    def translate_message(self, message):
+        """Method to process translation."""
+        self.__get_language(message.content)
+        return self.__generate_embed(message)
 
-    def get_language(self, text):
+    def __get_language(self, text):
         """Method to extract the language of a given text."""
         lang = TextBlob(text)
         self.src_lang = lang.detect_language()
@@ -57,7 +57,7 @@ class TranslateMe:
 
         return translations
 
-    def generate_embed(self, message):
+    def __generate_embed(self, message):
         """Method to manage the translation."""
         valid_languages = []
 
@@ -67,12 +67,10 @@ class TranslateMe:
         trans_messages = self.__translate_text(message.content, valid_languages)
 
         if trans_messages != {}:
-            statsd.increment("translated_msg", tags=["environment:develop"])
             translate_embed = discord.Embed(
                 colour=discord.Colour(0x4A90E2),
                 description=f"{trans_messages[1].text} \n\n "
-                f"{trans_messages[2].text} \n\n"
-                f"{trans_messages[3].text}",
+                f"{trans_messages[2].text}",
             )
 
             result = {

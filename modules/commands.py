@@ -3,10 +3,24 @@ import discord
 
 
 class Commands:
-    """class to supply methods for each command and one controlling method."""
+    """class to supply command-functionality for the bot."""
 
-    def __init__(self):
-        pass
+    def __init__(self, translation, validation):
+        self.translation = translation
+        self.message_stats = validation
+    
+    def commands(self, command, enable_translate):
+        """Method to process bot commands."""
+        return {
+            "help": self.get_help(),
+            "start": self.trigger_translation(command, enable_translate),
+            "stop": self.trigger_translation(command, enable_translate),
+            "status": self.get_status(enable_translate),
+            "stats": self.get_stats(
+                language_stats=self.translation.get_language_counts(),
+                message_stats=self.message_stats.get_message_count(),
+            ),
+        }[command]
 
     @staticmethod
     def get_help():
@@ -68,7 +82,6 @@ class Commands:
             f"German: {language_stats['de']} Messages\n"
             f"English: {language_stats['en']} Messages\n"
             f"French: {language_stats['fr']} Messages\n"
-            f"Russian: {language_stats['ru']} Messages\n"
             f"Other: {language_stats['other']} Messages\n"
             f"\n"
             f"Messages translated: {message_stats['translated']} \n"

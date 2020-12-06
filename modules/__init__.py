@@ -1,4 +1,4 @@
-"""Module: handler."""
+"""Module: modules."""
 
 from .messages import Messages
 from .translation import TranslateMe

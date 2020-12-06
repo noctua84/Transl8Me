@@ -3,11 +3,11 @@ import time
 import asyncio
 import discord
 from sentry_sdk import capture_exception
-from controllers.messagecontroller import MessageController
 from validations.validatecommands import ValidateCommands
 from validations.validateroles import ValidateRoles
-from handler.messages import Messages
-from handler.translation import TranslateMe
+from modules.messages import Messages
+from modules.translation import TranslateMe
+from modules.commands import Commands
 
 
 class Bot(discord.Client):
@@ -22,7 +22,7 @@ class Bot(discord.Client):
         self.val_com = ValidateCommands(config["commands"])
         self.val_role = ValidateRoles
         self.trans = TranslateMe(config)
-        self.message_controller = MessageController(self.trans, self.msg)
+        self.cmd = Commands(self.trans, self.msg)
 
     def set_client(self, client):
         """Method to supply the actual client-instance."""
@@ -61,7 +61,7 @@ class Bot(discord.Client):
             if self.val_com.command_restrictions(
                 context, self.val_role.validate_admin_role(message)
             ):
-                result = self.message_controller.commands(
+                result = self.cmd.commands(
                     context, self.enable_translate
                 )
 
@@ -79,9 +79,10 @@ class Bot(discord.Client):
         # ---------------------------------------------------------------------------------------
         # general message reaction:
         else:
+            
             if self.msg.is_translatable(message):
-                translate_embed = self.message_controller.translate_message(message)
-
+                translate_embed = self.trans.translate_message(message)
+                
                 if translate_embed["embed"] is not None:
                     self.msg.message_count_all += 1
                     self.msg.message_count_translated += 1
