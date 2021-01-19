@@ -44,7 +44,7 @@ PyYAML==5.3.1
 regex==2020.11.13
 requests==2.25.0
 rfc3986==1.4.0
-rsa==4.6
+rsa==4.7
 sentry-sdk==0.19.4
 six==1.15.0
 sniffio==1.2.0
