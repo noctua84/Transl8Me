@@ -1,5 +1,5 @@
 aiocontextvars==0.2.2
-aiohttp==3.6.3
+aiohttp==3.7.4
 appdirs==1.4.4
 async-timeout==3.0.1
 attrs==20.3.0
@@ -52,7 +52,7 @@ textblob==0.15.3
 tqdm==4.54.0
 typing-extensions==3.7.4.3
 typing-inspect==0.6.0
-urllib3==1.26.2
+urllib3==1.26.4
 virtualenv==20.2.1
 virtualenv-clone==0.5.4
 yarl==1.5.1
