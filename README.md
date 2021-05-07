@@ -19,6 +19,8 @@
 
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/y/noctua84/transl8me)
 ![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/noctua84/transl8me/latest)
+  
+[![wakatime](https://wakatime.com/badge/github/noctua84/Transl8Me.svg)](https://wakatime.com/badge/github/noctua84/Transl8Me)
 
 ## Transl8Me
 
