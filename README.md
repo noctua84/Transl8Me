@@ -1,5 +1,6 @@
 ## Statistics
-![Python application](https://github.com/noctua84/Transl8Me/workflows/Python%20application/badge.svg)  
+![Python application](https://github.com/noctua84/Transl8Me/workflows/Python%20application/badge.svg) [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fnoctua84%2FTransl8Me.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fnoctua84%2FTransl8Me?ref=badge_shield)
+ 
 
 ![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/noctua84/transl8me)
 ![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)  
@@ -122,3 +123,7 @@ The Bot will run as daemon under linux and will continue running even if the con
 2. (sudo) python3 main.py stop - this will stop the daemon.
 3. (sudo) python3 main.py restart - this will restart the daemon.
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fnoctua84%2FTransl8Me.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fnoctua84%2FTransl8Me?ref=badge_large)
