@@ -1,5 +1,5 @@
 ## Statistics
-![Python application](https://github.com/noctua84/Transl8Me/workflows/Python%20application/badge.svg) [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fnoctua84%2FTransl8Me.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fnoctua84%2FTransl8Me?ref=badge_shield)
+![Python application](https://github.com/noctua84/Transl8Me/workflows/Python%20application/badge.svg)
  
 
 ![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/noctua84/transl8me)
